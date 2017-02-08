@@ -41,7 +41,8 @@ public class IntroActivity extends AppCompatActivity implements SharedPreference
         titleText.setText("Register Device");
         descriptionText.setText(Html.fromHtml(
                 "Device Needs to be registered with the Udacity Review API token in order to receive notifications.\n\n" +
-                        "Always run grading-assigner.py with an additional <code>flag --fcm-token=FCM_TOKEN</code>"));
+                        "Always run grading-assigner.py with an additional parameter<code> --fcm-token FCM_TOKEN</code>.\n\n" +
+                        "This is not a replacement of the Udacity Review API token. Both the tokens are required."));
 
         findViewById(R.id.copy_button).setOnClickListener(new View.OnClickListener() {
             @Override

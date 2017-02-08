@@ -1,6 +1,0 @@
-{
-  "uri": "http://https://review-api.udacity.com/api/v1/me/submission_requests.json",
-  "method": "GET",
-  "body": "",
-  "headers": {}
-}
