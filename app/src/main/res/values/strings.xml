@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Udacity Reviewer</string>
+    <string name="title_activity_preferences">Preferences</string>
+    <string name="share_app">Share App</string>
+    <string name="invitation_title">Udacity Reviewers Invitation</string>
+    <string name="invitation_message">Udacity Reviewers Dashboard Consolidated</string>
+    <string name="invitation_custom_image">https://placehold.it/1000x1000</string>
+    <string name="invitation_cta">Install Now!</string>
+    <string name="open_drawer">Drawer Open</string>
+    <string name="close_drawer">Drawer Close</string>
+    <string name="line_one">%1$d reviews completed with an average time of %2$d hours, %3$d minutes and %4$d seconds per review</string>
+    <string name="line_two">Earned $%1$s with an average of $%2$.2f per review</string>
+    <string name="your_reviews">Your Reviews</string>
+    <string name="completed_detail">Reviewed on %1$s, you took %2$d hours, %3$d minutes and %4$d seconds. You earned $%5$s!</string>
+    <string name="feedback_detail">Feedback from student: %1$s</string>
+    <string name="reset_message">This will reset the app. You will no longer receive notifications. You will have to register the device and rerun the python script again. Continue?</string>
+    <string name="inactive_submission_requests">No active submission requests</string>
+    <string name="your_queue_position">Your Queue</string>
+    <string name="queue_text">You are at position %1$d for %2$s</string>
+
+    <string name="pref_fcm_token" translatable="false">key_fcm_token</string>
+    <string name="pref_udacity_token" translatable="false">key_udacity_token</string>
+    <string name="pref_name" translatable="false">key_name</string>
+    <string name="pref_role" translatable="false">key_role</string>
+    <string name="pref_reset" translatable="false">key_reset</string>
+    <string name="something_wrong">Something went wrong</string>
+    <string name="invalid_udacity_token">Invalid Udacity Review API Token</string>
+
+</resources>

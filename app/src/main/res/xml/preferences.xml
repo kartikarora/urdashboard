@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:defaultValue="None"
+        android:key="@string/pref_fcm_token"
+        android:summary="Show FCM token for this device"
+        android:title="FCM Token" />
+
+    <Preference
+        android:defaultValue="None"
+        android:key="@string/pref_udacity_token"
+        android:summary="Show registered Udacity Reviews API token"
+        android:title="Udacity Reviews API Token" />
+
+</PreferenceScreen>
