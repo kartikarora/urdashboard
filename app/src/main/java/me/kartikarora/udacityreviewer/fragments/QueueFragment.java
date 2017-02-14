@@ -94,14 +94,20 @@ public class QueueFragment extends Fragment {
             @Override
             public void onResponse(Call<List<SubmissionRequest>> call, final Response<List<SubmissionRequest>> submissionsResponse) {
                 if (submissionsResponse.code() == 401) {
-                    messTextView.setVisibility(View.VISIBLE);
-                    refreshLayout.setRefreshing(false);
-                    messTextView.setText(R.string.invalid_udacity_token);
+                    if (isAdded()) {
+                        messTextView.setVisibility(View.VISIBLE);
+                        refreshLayout.setRefreshing(false);
+                        messTextView.setText(R.string.invalid_udacity_token);
+                    }
                 } else if (submissionsResponse.code() == 200) {
-                    refreshLayout.setRefreshing(false);
-                    messTextView.setVisibility(View.VISIBLE);
+                    if (isAdded()) {
+                        refreshLayout.setRefreshing(false);
+                        messTextView.setVisibility(View.VISIBLE);
+                    }
                     if (submissionsResponse.body().size() == 0) {
-                        messTextView.setText(R.string.inactive_submission_requests);
+                        if (isAdded()) {
+                            messTextView.setText(R.string.inactive_submission_requests);
+                        }
                     } else {
                         udacityReviewService.getCertifications(headers).enqueue(new Callback<List<Certification>>() {
                             @Override
@@ -123,17 +129,21 @@ public class QueueFragment extends Fragment {
                                                 queue.setPosition(waits.getPosition());
                                                 queueList.set(queueList.indexOf(queue), queue);
                                             }
-                                            queueRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                                            queueRecyclerView.setAdapter(new QueueAdapter(queueList));
-                                            queueRecyclerView.setVisibility(View.VISIBLE);
+                                            if (isAdded()) {
+                                                queueRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                                queueRecyclerView.setAdapter(new QueueAdapter(queueList));
+                                                queueRecyclerView.setVisibility(View.VISIBLE);
+                                            }
                                         }
 
                                         @Override
                                         public void onFailure(Call<List<Waits>> call, Throwable t) {
                                             t.printStackTrace();
-                                            messTextView.setVisibility(View.VISIBLE);
-                                            refreshLayout.setRefreshing(false);
-                                            messTextView.setText(R.string.something_wrong);
+                                            if (isAdded()) {
+                                                messTextView.setVisibility(View.VISIBLE);
+                                                refreshLayout.setRefreshing(false);
+                                                messTextView.setText(R.string.something_wrong);
+                                            }
                                         }
                                     });
                                 }
@@ -142,16 +152,21 @@ public class QueueFragment extends Fragment {
                             @Override
                             public void onFailure(Call<List<Certification>> call, Throwable t) {
                                 t.printStackTrace();
-                                messTextView.setVisibility(View.VISIBLE);
-                                refreshLayout.setRefreshing(false);
-                                messTextView.setText(R.string.something_wrong);
+                                if (isAdded()) {
+                                    messTextView.setVisibility(View.VISIBLE);
+                                    refreshLayout.setRefreshing(false);
+                                    messTextView.setText(R.string.something_wrong);
+                                }
                             }
                         });
                     }
                 } else {
-                    messTextView.setVisibility(View.VISIBLE);
-                    refreshLayout.setRefreshing(false);
-                    messTextView.setText(R.string.something_wrong);
+
+                    if (isAdded()) {
+                        messTextView.setVisibility(View.VISIBLE);
+                        refreshLayout.setRefreshing(false);
+                        messTextView.setText(R.string.something_wrong);
+                    }
                     Log.i(LOG_TAG, submissionsResponse.code() + " - " + submissionsResponse.message());
                 }
             }
@@ -159,8 +174,10 @@ public class QueueFragment extends Fragment {
             @Override
             public void onFailure(Call<List<SubmissionRequest>> call, Throwable t) {
                 t.printStackTrace();
-                messTextView.setVisibility(View.VISIBLE);
-                messTextView.setText(R.string.something_wrong);
+                if (isAdded()) {
+                    messTextView.setVisibility(View.VISIBLE);
+                    messTextView.setText(R.string.something_wrong);
+                }
             }
         });
     }

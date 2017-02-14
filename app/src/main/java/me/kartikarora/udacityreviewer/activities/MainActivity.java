@@ -35,7 +35,7 @@ import me.kartikarora.udacityreviewer.utils.HelperUtils;
 public class MainActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = MainActivity.class.getName();
-    private int checkedItem;
+    private int checkedItem = R.id.nav_stats;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
 
@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
             String name = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_name));
             String role = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_role));
             View header = mNavigationView.getHeaderView(0);
@@ -105,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
             nameView.setText(HelperUtils.getInstance().capitalize(name));
             roleView.setText(HelperUtils.getInstance().capitalize(role));
             nameInitialView.setText(HelperUtils.getInstance().capitalize(String.valueOf(name.charAt(0))));
+            if (checkedItem == R.id.nav_stats) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
+            } else if (checkedItem == R.id.nav_queue) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
+            }
         }
     }
 
@@ -135,14 +138,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("checkedItem", checkedItem);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        checkedItem = savedInstanceState.getInt("checkedItem", R.id.nav_queue);
+        checkedItem = savedInstanceState.getInt("checkedItem", R.id.nav_stats);
         mNavigationView.setCheckedItem(checkedItem);
-        super.onRestoreInstanceState(savedInstanceState);
+        if (checkedItem == R.id.nav_stats) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
+        } else if (checkedItem == R.id.nav_queue) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
+        }
     }
 
     @Override

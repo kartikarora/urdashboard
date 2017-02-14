@@ -120,10 +120,11 @@ public class StatsFragment extends Fragment {
                 TextView lineOne = (TextView) view.findViewById(R.id.stats_line_one);
                 TextView lineTwo = (TextView) view.findViewById(R.id.stats_line_two);
 
-                lineOne.setText(getString(R.string.line_one, totalRevs, averageTime.get(Calendar.HOUR_OF_DAY),
-                        averageTime.get(Calendar.MINUTE), averageTime.get(Calendar.SECOND)));
-                lineTwo.setText(getString(R.string.line_two, totalEarned, avgEarned));
-
+                if (isAdded()) {
+                    lineOne.setText(getString(R.string.line_one, totalRevs, averageTime.get(Calendar.HOUR_OF_DAY),
+                            averageTime.get(Calendar.MINUTE), averageTime.get(Calendar.SECOND)));
+                    lineTwo.setText(getString(R.string.line_two, totalEarned, avgEarned));
+                }
                 udacityReviewService.getFeedbacks(headers).enqueue(new Callback<FeedbackList>() {
                     @Override
                     public void onResponse(Call<FeedbackList> call, Response<FeedbackList> response) {
@@ -135,10 +136,12 @@ public class StatsFragment extends Fragment {
                             }
                         }
 
-                        view.findViewById(R.id.stats_app_bar).setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.reviews_title).setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        refreshLayout.setRefreshing(false);
+                        if (isAdded()) {
+                            view.findViewById(R.id.stats_app_bar).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.reviews_title).setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            refreshLayout.setRefreshing(false);
+                        }
                     }
 
                     @Override
