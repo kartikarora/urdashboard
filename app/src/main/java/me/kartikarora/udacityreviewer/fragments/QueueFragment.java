@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,6 +39,11 @@ public class QueueFragment extends Fragment {
 
     private static final String LOG_TAG = QueueFragment.class.getName();
     private QueueList queueList = new QueueList();
+    private ArrayMap<String, String> headers;
+    private TextView messTextView;
+    private RecyclerView queueRecyclerView;
+    private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
+    private SwipeRefreshLayout refreshLayout;
 
     public QueueFragment() {
     }
@@ -64,21 +69,36 @@ public class QueueFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
-        final ArrayMap<String, String> headers = HelperUtils.getInstance().getHeaders(getContext());
-        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.loading_progress);
-        final TextView messTextView = (TextView) view.findViewById(R.id.message_text_view);
-        final RecyclerView queueRecyclerView = (RecyclerView) view.findViewById(R.id.queue_recycle_view);
-        final UdacityReviewAPIUtils.UdacityReviewService udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
+        headers = HelperUtils.getInstance().getHeaders(getContext());
+        messTextView = (TextView) view.findViewById(R.id.message_text_view);
+        udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
+        queueRecyclerView = (RecyclerView) view.findViewById(R.id.queue_recycle_view);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        refreshLayout.setColorSchemeResources(R.color.accent);
+        refreshLayout.setRefreshing(true);
+        fetchQueue();
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchQueue();
+            }
+        });
 
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void fetchQueue() {
+        queueList.clear();
+        refreshLayout.setRefreshing(true);
         udacityReviewService.getSubmissionRequests(headers).enqueue(new Callback<List<SubmissionRequest>>() {
             @Override
             public void onResponse(Call<List<SubmissionRequest>> call, final Response<List<SubmissionRequest>> submissionsResponse) {
                 if (submissionsResponse.code() == 401) {
                     messTextView.setVisibility(View.VISIBLE);
-                    bar.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
                     messTextView.setText(R.string.invalid_udacity_token);
                 } else if (submissionsResponse.code() == 200) {
-                    bar.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
                     messTextView.setVisibility(View.VISIBLE);
                     if (submissionsResponse.body().size() == 0) {
                         messTextView.setText(R.string.inactive_submission_requests);
@@ -112,7 +132,7 @@ public class QueueFragment extends Fragment {
                                         public void onFailure(Call<List<Waits>> call, Throwable t) {
                                             t.printStackTrace();
                                             messTextView.setVisibility(View.VISIBLE);
-                                            bar.setVisibility(View.GONE);
+                                            refreshLayout.setRefreshing(false);
                                             messTextView.setText(R.string.something_wrong);
                                         }
                                     });
@@ -123,15 +143,14 @@ public class QueueFragment extends Fragment {
                             public void onFailure(Call<List<Certification>> call, Throwable t) {
                                 t.printStackTrace();
                                 messTextView.setVisibility(View.VISIBLE);
-                                bar.setVisibility(View.GONE);
+                                refreshLayout.setRefreshing(false);
                                 messTextView.setText(R.string.something_wrong);
                             }
                         });
-
                     }
                 } else {
                     messTextView.setVisibility(View.VISIBLE);
-                    bar.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
                     messTextView.setText(R.string.something_wrong);
                     Log.i(LOG_TAG, submissionsResponse.code() + " - " + submissionsResponse.message());
                 }
@@ -141,11 +160,8 @@ public class QueueFragment extends Fragment {
             public void onFailure(Call<List<SubmissionRequest>> call, Throwable t) {
                 t.printStackTrace();
                 messTextView.setVisibility(View.VISIBLE);
-                bar.setVisibility(View.GONE);
                 messTextView.setText(R.string.something_wrong);
             }
         });
-
-        super.onViewCreated(view, savedInstanceState);
     }
 }

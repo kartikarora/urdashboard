@@ -29,31 +29,45 @@ public class GradingAssignerUpdateService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        String type = remoteMessage.getData().get("type");
-        if (type.equals("assignment")) {
-            sendNotification(remoteMessage.getData().get("message"), remoteMessage.getData().get("url"));
-        } else if (type.equals("registration")) {
-            Potato.potate(getApplicationContext()).Preferences()
-                    .putSharedPreference(getString(R.string.pref_udacity_token), remoteMessage.getData().get("token"));
+        try {
+            String type = remoteMessage.getData().get("type");
+            switch (type) {
+                case "assignment":
+                    sendNotification("New Review", remoteMessage.getData().get("message"), remoteMessage.getData().get("url"));
+                    break;
+                case "registration":
+                    Potato.potate(getApplicationContext()).Preferences()
+                            .putSharedPreference(getString(R.string.pref_udacity_token), remoteMessage.getData().get("token"));
+                    break;
+                case "activation":
+                case "deactivation":
+                    sendNotification("Configuration Change", remoteMessage.getData().get("message"), null);
+                    break;
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
+
     }
 
-    private void sendNotification(String messageBody, String url) {
-
-        Intent urlIntent = new Intent(Intent.ACTION_VIEW)
-                .setData(Uri.parse(url))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingUrlIntent = PendingIntent.getActivity(this, BuildConfig.VERSION_CODE, urlIntent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void sendNotification(String type, String messageBody, String action) {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_info)
-                .setContentTitle("New Review")
+                .setContentTitle(type)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .addAction(R.drawable.ic_launch, "View Submission", pendingUrlIntent);
+                .setSound(defaultSoundUri);
+
+        if (action != null) {
+            Intent urlIntent = new Intent(Intent.ACTION_VIEW)
+                    .setData(Uri.parse(action))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent pendingUrlIntent = PendingIntent.getActivity(this, BuildConfig.VERSION_CODE, urlIntent,
+                    PendingIntent.FLAG_ONE_SHOT);
+            notificationBuilder.addAction(R.drawable.ic_launch, "View Submission", pendingUrlIntent);
+        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

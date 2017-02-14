@@ -1,75 +1,76 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="me.kartikarora.udacityreviewer.fragments.StatsFragment">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/stats_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/stats_line_one"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                tools:text="Line 1" />
-
-            <TextView
-                android:id="@+id/stats_line_two"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
-                tools:text="Line 2" />
-
-        </LinearLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/loading_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
-        <TextView
-            android:id="@+id/reviews_title"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/stats_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/your_reviews"
-            android:textColor="@android:color/black"
-            android:textSize="32sp"
-            android:textStyle="italic"
-            android:visibility="gone" />
+            android:visibility="gone">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/completed_recycle_view"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stats_line_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                    tools:text="Line 1" />
+
+                <TextView
+                    android:id="@+id/stats_line_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
+                    tools:text="Line 2" />
+
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/reviews_title"
-            android:visibility="gone"
-            tools:listitem="@layout/completed_item" />
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
-</LinearLayout>
+            <TextView
+                android:id="@+id/reviews_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/your_reviews"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/completed_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/reviews_title"
+                android:visibility="gone"
+                tools:listitem="@layout/completed_item" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
