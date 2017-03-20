@@ -13,9 +13,9 @@ import me.kartikarora.udacityreviewer.models.queue.Queue;
  */
 
 public class QueueList extends ArrayList<Queue> {
-    public Queue getQueueItemFromProjectId(Integer project_id) {
+    public Queue getQueueItemFromProjectId(long project_id) {
         for (Queue queue : this) {
-            if (queue.getProject_id().equals(project_id))
+            if (queue.getProject_id() == project_id)
                 return queue;
         }
         return null;

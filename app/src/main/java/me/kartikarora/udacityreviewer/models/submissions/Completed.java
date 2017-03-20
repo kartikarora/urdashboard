@@ -1,5 +1,6 @@
 package me.kartikarora.udacityreviewer.models.submissions;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
@@ -17,7 +18,7 @@ import me.kartikarora.udacityreviewer.models.me.Feedback;
  * Date : 2/6/17
  */
 
-public class Completed {
+public class Completed implements Comparable<Completed> {
 
     @SerializedName("status")
     @Expose
@@ -27,16 +28,16 @@ public class Completed {
     private String result;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("rubric_id")
     @Expose
-    private Integer rubricId;
+    private long rubricId;
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
+    private long userId;
     @SerializedName("grader_id")
     @Expose
-    private Integer graderId;
+    private long graderId;
     @SerializedName("notes")
     @Expose
     private Object notes;
@@ -99,7 +100,7 @@ public class Completed {
     private String generalComment;
     @SerializedName("hidden")
     @Expose
-    private Boolean hidden;
+    private boolean hidden;
     @SerializedName("previous_submission_id")
     @Expose
     private Object previousSubmissionId;
@@ -111,13 +112,13 @@ public class Completed {
     private String language;
     @SerializedName("is_training")
     @Expose
-    private Boolean isTraining;
+    private boolean isTraining;
     @SerializedName("canary_metadata")
     @Expose
     private Object canaryMetadata;
     @SerializedName("project_id")
     @Expose
-    private Integer projectId;
+    private long projectId;
     @SerializedName("user")
     @Expose
     private User user;
@@ -157,35 +158,35 @@ public class Completed {
         this.result = result;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Integer getRubricId() {
+    public long getRubricId() {
         return rubricId;
     }
 
-    public void setRubricId(Integer rubricId) {
+    public void setRubricId(long rubricId) {
         this.rubricId = rubricId;
     }
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public Integer getGraderId() {
+    public long getGraderId() {
         return graderId;
     }
 
-    public void setGraderId(Integer graderId) {
+    public void setGraderId(long graderId) {
         this.graderId = graderId;
     }
 
@@ -349,11 +350,11 @@ public class Completed {
         this.generalComment = generalComment;
     }
 
-    public Boolean getHidden() {
+    public boolean getHidden() {
         return hidden;
     }
 
-    public void setHidden(Boolean hidden) {
+    public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }
 
@@ -381,11 +382,11 @@ public class Completed {
         this.language = language;
     }
 
-    public Boolean getIsTraining() {
+    public boolean getIsTraining() {
         return isTraining;
     }
 
-    public void setIsTraining(Boolean isTraining) {
+    public void setIsTraining(boolean isTraining) {
         this.isTraining = isTraining;
     }
 
@@ -397,11 +398,11 @@ public class Completed {
         this.canaryMetadata = canaryMetadata;
     }
 
-    public Integer getProjectId() {
+    public long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
 
@@ -437,4 +438,11 @@ public class Completed {
         this.rubric = rubric;
     }
 
+    @Override
+    public int compareTo(@NonNull Completed other) {
+        long value = other.getId() - this.getId();
+        if (value > 0) return 1;
+        else if (value < 0) return -1;
+        else return 0;
+    }
 }

@@ -17,7 +17,7 @@ public class Rubric {
     private String description;
     @SerializedName("nomination_eligible")
     @Expose
-    private Boolean nominationEligible;
+    private boolean nominationEligible;
 
     public String getDescription() {
         return description;
@@ -27,11 +27,11 @@ public class Rubric {
         this.description = description;
     }
 
-    public Boolean getNominationEligible() {
+    public boolean getNominationEligible() {
         return nominationEligible;
     }
 
-    public void setNominationEligible(Boolean nominationEligible) {
+    public void setNominationEligible(boolean nominationEligible) {
         this.nominationEligible = nominationEligible;
     }
 

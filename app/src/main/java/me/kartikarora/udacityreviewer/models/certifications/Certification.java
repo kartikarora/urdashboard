@@ -19,13 +19,13 @@ public class Certification {
     private String status;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("project_id")
     @Expose
-    private Integer projectId;
+    private long projectId;
     @SerializedName("grader_id")
     @Expose
-    private Integer graderId;
+    private long graderId;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -40,16 +40,16 @@ public class Certification {
     private String certifiedAt;
     @SerializedName("trainings_count")
     @Expose
-    private Integer trainingsCount;
+    private long trainingsCount;
     @SerializedName("active")
     @Expose
-    private Boolean active;
+    private boolean active;
     @SerializedName("notes")
     @Expose
     private String notes;
     @SerializedName("allowed_to_audit")
     @Expose
-    private Boolean allowedToAudit;
+    private boolean allowedToAudit;
     @SerializedName("project")
     @Expose
     private Project project;
@@ -62,27 +62,27 @@ public class Certification {
         this.status = status;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Integer getProjectId() {
+    public long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
 
-    public Integer getGraderId() {
+    public long getGraderId() {
         return graderId;
     }
 
-    public void setGraderId(Integer graderId) {
+    public void setGraderId(long graderId) {
         this.graderId = graderId;
     }
 
@@ -118,19 +118,19 @@ public class Certification {
         this.certifiedAt = certifiedAt;
     }
 
-    public Integer getTrainingsCount() {
+    public long getTrainingsCount() {
         return trainingsCount;
     }
 
-    public void setTrainingsCount(Integer trainingsCount) {
+    public void setTrainingsCount(long trainingsCount) {
         this.trainingsCount = trainingsCount;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
@@ -142,11 +142,11 @@ public class Certification {
         this.notes = notes;
     }
 
-    public Boolean getAllowedToAudit() {
+    public boolean getAllowedToAudit() {
         return allowedToAudit;
     }
 
-    public void setAllowedToAudit(Boolean allowedToAudit) {
+    public void setAllowedToAudit(boolean allowedToAudit) {
         this.allowedToAudit = allowedToAudit;
     }
 

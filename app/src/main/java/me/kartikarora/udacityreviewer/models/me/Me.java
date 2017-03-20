@@ -12,22 +12,22 @@ import java.util.Map;
 
 public class Me {
 
-    private Integer id;
+    private long id;
     private String email;
     private String name;
     private String role;
     private String githubToken;
-    private Boolean acceptedTerms;
-    private Boolean preconditionsCompleted;
+    private boolean acceptedTerms;
+    private boolean preconditionsCompleted;
     private String udacityKey;
     private Application application;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -63,19 +63,19 @@ public class Me {
         this.githubToken = githubToken;
     }
 
-    public Boolean getAcceptedTerms() {
+    public boolean getAcceptedTerms() {
         return acceptedTerms;
     }
 
-    public void setAcceptedTerms(Boolean acceptedTerms) {
+    public void setAcceptedTerms(boolean acceptedTerms) {
         this.acceptedTerms = acceptedTerms;
     }
 
-    public Boolean getPreconditionsCompleted() {
+    public boolean getPreconditionsCompleted() {
         return preconditionsCompleted;
     }
 
-    public void setPreconditionsCompleted(Boolean preconditionsCompleted) {
+    public void setPreconditionsCompleted(boolean preconditionsCompleted) {
         this.preconditionsCompleted = preconditionsCompleted;
     }
 

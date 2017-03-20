@@ -13,16 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.adapters.CompletedAdapter;
+import me.kartikarora.udacityreviewer.datastructures.CompletedList;
 import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
 import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
@@ -92,13 +95,14 @@ public class StatsFragment extends Fragment {
 
     private void fetchStats(final View view) {
         refreshLayout.setRefreshing(true);
-        udacityReviewService.getSubmissionsCompleted(headers).enqueue(new Callback<List<Completed>>() {
+        udacityReviewService.getSubmissionsCompleted(headers).enqueue(new Callback<CompletedList>() {
             @Override
-            public void onResponse(Call<List<Completed>> call, final Response<List<Completed>> completedResponse) {
-                List<Completed> completed = completedResponse.body();
-                recyclerView.setAdapter(new CompletedAdapter(completed));
-                totalRevs = completed.size();
-                for (Completed project : completed) {
+            public void onResponse(Call<CompletedList> call, final Response<CompletedList> completedResponse) {
+                CompletedList completedList = completedResponse.body();
+                Collections.sort(completedList);
+                recyclerView.setAdapter(new CompletedAdapter(completedList));
+                totalRevs = completedList.size();
+                for (Completed project : completedList) {
                     avgEarned += Double.parseDouble(project.getPrice());
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
                     try {
@@ -129,11 +133,11 @@ public class StatsFragment extends Fragment {
                     @Override
                     public void onResponse(Call<FeedbackList> call, Response<FeedbackList> response) {
                         FeedbackList list = response.body();
-                        if (list.size() > 0) {
-                            for (Completed completed : completedResponse.body()) {
-                                Feedback feedback = list.getFeedbackFromId(completed.getId());
-                                completed.setFeedback(feedback);
-                            }
+                        Logger.d(list);
+                        CompletedList completedList = completedResponse.body();
+                        for (Feedback feedback : list) {
+                            Completed completed = completedList.getSubmissionFromId(feedback.getSubmissionId());
+                            completed.setFeedback(feedback);
                         }
 
                         if (isAdded()) {
@@ -153,7 +157,7 @@ public class StatsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Completed>> call, Throwable t) {
+            public void onFailure(Call<CompletedList> call, Throwable t) {
                 t.printStackTrace();
             }
         });

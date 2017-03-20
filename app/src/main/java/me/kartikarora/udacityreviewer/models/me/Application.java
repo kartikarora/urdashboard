@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class Application {
 
-    private Integer userId;
-    private Integer id;
+    private long userId;
+    private long id;
     private String linkedinUrl;
     private String githubUrl;
     private List<String> languages = null;
@@ -26,19 +26,19 @@ public class Application {
     private String name;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

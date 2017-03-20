@@ -13,9 +13,9 @@ import me.kartikarora.udacityreviewer.models.me.Feedback;
  */
 
 public class FeedbackList extends ArrayList<Feedback> {
-    public Feedback getFeedbackFromId(Integer submission_id) {
+    public Feedback getFeedbackFromId(long submission_id) {
         for (Feedback feedback : this) {
-            if (feedback.getSubmissionId().equals(submission_id))
+            if (feedback.getSubmissionId() == submission_id)
                 return feedback;
         }
         return null;

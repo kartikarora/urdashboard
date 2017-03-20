@@ -73,8 +73,8 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
             } else {
                 holder.feedback.setVisibility(View.GONE);
             }
-            if (feedback.getRating() != null) {
-                holder.ratingBar.setRating(Float.valueOf(feedback.getRating()));
+            if (feedback.getRating() > 0.0) {
+                holder.ratingBar.setRating(feedback.getRating());
             } else {
                 holder.ratingBar.setVisibility(View.GONE);
             }

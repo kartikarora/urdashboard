@@ -14,16 +14,16 @@ public class SubmissionRequestProject {
 
     @SerializedName("project_id")
     @Expose
-    private Integer projectId;
+    private long projectId;
     @SerializedName("language")
     @Expose
     private String language;
 
-    public Integer getProjectId() {
+    public long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
 

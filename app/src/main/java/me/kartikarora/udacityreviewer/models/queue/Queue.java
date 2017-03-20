@@ -9,9 +9,9 @@ package me.kartikarora.udacityreviewer.models.queue;
 
 public class Queue {
 
-    private Integer project_id;
+    private long project_id;
     private String name;
-    private Integer position;
+    private long position;
 
     public Queue() {
     }
@@ -24,19 +24,19 @@ public class Queue {
         this.name = name;
     }
 
-    public Integer getProject_id() {
+    public long getProject_id() {
         return project_id;
     }
 
-    public void setProject_id(Integer project_id) {
+    public void setProject_id(long project_id) {
         this.project_id = project_id;
     }
 
-    public Integer getPosition() {
+    public long getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(long position) {
         this.position = position;
     }
 }

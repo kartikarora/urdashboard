@@ -19,7 +19,7 @@ public class Project {
     private List<String> languagesToRecruit = null;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -40,34 +40,34 @@ public class Project {
     private String requiredSkills;
     @SerializedName("visible")
     @Expose
-    private Boolean visible;
+    private boolean visible;
     @SerializedName("awaiting_review_count")
     @Expose
-    private Integer awaitingReviewCount;
+    private long awaitingReviewCount;
     @SerializedName("waitlist")
     @Expose
-    private Boolean waitlist;
+    private boolean waitlist;
     @SerializedName("nanodegree_key")
     @Expose
     private String nanodegreeKey;
     @SerializedName("audit_project_id")
     @Expose
-    private Integer auditProjectId;
+    private long auditProjectId;
     @SerializedName("hashtag")
     @Expose
     private String hashtag;
     @SerializedName("audit_rubric_id")
     @Expose
-    private Integer auditRubricId;
+    private long auditRubricId;
     @SerializedName("is_cert_project")
     @Expose
-    private Boolean isCertProject;
+    private boolean isCertProject;
     @SerializedName("audit_price")
     @Expose
     private String auditPrice;
     @SerializedName("awaiting_audit_count")
     @Expose
-    private Integer awaitingAuditCount;
+    private long awaitingAuditCount;
 
     public List<String> getLanguagesToRecruit() {
         return languagesToRecruit;
@@ -77,11 +77,11 @@ public class Project {
         this.languagesToRecruit = languagesToRecruit;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -133,27 +133,27 @@ public class Project {
         this.requiredSkills = requiredSkills;
     }
 
-    public Boolean getVisible() {
+    public boolean getVisible() {
         return visible;
     }
 
-    public void setVisible(Boolean visible) {
+    public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
-    public Integer getAwaitingReviewCount() {
+    public long getAwaitingReviewCount() {
         return awaitingReviewCount;
     }
 
-    public void setAwaitingReviewCount(Integer awaitingReviewCount) {
+    public void setAwaitingReviewCount(long awaitingReviewCount) {
         this.awaitingReviewCount = awaitingReviewCount;
     }
 
-    public Boolean getWaitlist() {
+    public boolean getWaitlist() {
         return waitlist;
     }
 
-    public void setWaitlist(Boolean waitlist) {
+    public void setWaitlist(boolean waitlist) {
         this.waitlist = waitlist;
     }
 
@@ -165,11 +165,11 @@ public class Project {
         this.nanodegreeKey = nanodegreeKey;
     }
 
-    public Integer getAuditProjectId() {
+    public long getAuditProjectId() {
         return auditProjectId;
     }
 
-    public void setAuditProjectId(Integer auditProjectId) {
+    public void setAuditProjectId(long auditProjectId) {
         this.auditProjectId = auditProjectId;
     }
 
@@ -181,19 +181,19 @@ public class Project {
         this.hashtag = hashtag;
     }
 
-    public Integer getAuditRubricId() {
+    public long getAuditRubricId() {
         return auditRubricId;
     }
 
-    public void setAuditRubricId(Integer auditRubricId) {
+    public void setAuditRubricId(long auditRubricId) {
         this.auditRubricId = auditRubricId;
     }
 
-    public Boolean getIsCertProject() {
+    public boolean getIsCertProject() {
         return isCertProject;
     }
 
-    public void setIsCertProject(Boolean isCertProject) {
+    public void setIsCertProject(boolean isCertProject) {
         this.isCertProject = isCertProject;
     }
 
@@ -205,11 +205,11 @@ public class Project {
         this.auditPrice = auditPrice;
     }
 
-    public Integer getAwaitingAuditCount() {
+    public long getAwaitingAuditCount() {
         return awaitingAuditCount;
     }
 
-    public void setAwaitingAuditCount(Integer awaitingAuditCount) {
+    public void setAwaitingAuditCount(long awaitingAuditCount) {
         this.awaitingAuditCount = awaitingAuditCount;
     }
 }

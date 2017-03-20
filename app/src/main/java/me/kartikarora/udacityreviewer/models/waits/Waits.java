@@ -14,19 +14,19 @@ public class Waits {
 
     @SerializedName("project_id")
     @Expose
-    private Integer projectId;
+    private long projectId;
     @SerializedName("language")
     @Expose
     private String language;
     @SerializedName("position")
     @Expose
-    private Integer position;
+    private long position;
 
-    public Integer getProjectId() {
+    public long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
 
@@ -38,11 +38,11 @@ public class Waits {
         this.language = language;
     }
 
-    public Integer getPosition() {
+    public long getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(long position) {
         this.position = position;
     }
 

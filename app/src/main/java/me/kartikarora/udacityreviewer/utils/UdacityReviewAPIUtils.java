@@ -4,10 +4,10 @@ import android.support.v4.util.ArrayMap;
 
 import java.util.List;
 
+import me.kartikarora.udacityreviewer.datastructures.CompletedList;
 import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
 import me.kartikarora.udacityreviewer.models.certifications.Certification;
 import me.kartikarora.udacityreviewer.models.me.Me;
-import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.models.submissions.SubmissionRequest;
 import me.kartikarora.udacityreviewer.models.waits.Waits;
 import retrofit2.Call;
@@ -60,7 +60,7 @@ public class UdacityReviewAPIUtils {
         Call<List<Certification>> getCertifications(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me/submissions/completed")
-        Call<List<Completed>> getSubmissionsCompleted(@HeaderMap ArrayMap<String, String> headers);
+        Call<CompletedList> getSubmissionsCompleted(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me")
         Call<Me> getMe(@HeaderMap ArrayMap<String, String> headers);

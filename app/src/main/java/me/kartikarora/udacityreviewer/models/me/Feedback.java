@@ -16,19 +16,19 @@ public class Feedback {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("rubric_id")
     @Expose
-    private Integer rubricId;
+    private long rubricId;
     @SerializedName("submission_id")
     @Expose
-    private Integer submissionId;
+    private long submissionId;
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
+    private long userId;
     @SerializedName("rating")
     @Expose
-    private Integer rating;
+    private long rating;
     @SerializedName("body")
     @Expose
     private String body;
@@ -40,48 +40,48 @@ public class Feedback {
     private String updatedAt;
     @SerializedName("grader_id")
     @Expose
-    private Integer graderId;
+    private long graderId;
     @SerializedName("read_at")
     @Expose
     private String readAt;
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Integer getRubricId() {
+    public long getRubricId() {
         return rubricId;
     }
 
-    public void setRubricId(Integer rubricId) {
+    public void setRubricId(long rubricId) {
         this.rubricId = rubricId;
     }
 
-    public Integer getSubmissionId() {
+    public long getSubmissionId() {
         return submissionId;
     }
 
-    public void setSubmissionId(Integer submissionId) {
+    public void setSubmissionId(long submissionId) {
         this.submissionId = submissionId;
     }
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public Integer getRating() {
+    public long getRating() {
         return rating;
     }
 
-    public void setRating(@Nullable Integer rating) {
+    public void setRating(@Nullable long rating) {
         this.rating = rating;
     }
 
@@ -109,11 +109,11 @@ public class Feedback {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getGraderId() {
+    public long getGraderId() {
         return graderId;
     }
 
-    public void setGraderId(Integer graderId) {
+    public void setGraderId(long graderId) {
         this.graderId = graderId;
     }
 

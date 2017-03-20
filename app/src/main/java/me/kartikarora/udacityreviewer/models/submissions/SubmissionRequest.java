@@ -16,10 +16,10 @@ public class SubmissionRequest {
 
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
+    private long userId;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("submission_id")
     @Expose
     private Object submissionId;
@@ -39,19 +39,19 @@ public class SubmissionRequest {
     @Expose
     private List<SubmissionRequestProject> submissionRequestProjects = null;
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
