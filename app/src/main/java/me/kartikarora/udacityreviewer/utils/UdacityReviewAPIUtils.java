@@ -70,5 +70,9 @@ public class UdacityReviewAPIUtils {
 
         @GET("me/student_feedbacks")
         Call<FeedbackList> getFeedbacks(@HeaderMap ArrayMap<String, String> headers);
+
+        @GET("/me/submissions/assigned")
+        Call<Integer> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);
+
     }
 }
