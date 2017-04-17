@@ -7,6 +7,7 @@ import java.util.List;
 import me.kartikarora.udacityreviewer.datastructures.CompletedList;
 import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
 import me.kartikarora.udacityreviewer.models.certifications.Certification;
+import me.kartikarora.udacityreviewer.models.me.AssignCount;
 import me.kartikarora.udacityreviewer.models.me.Me;
 import me.kartikarora.udacityreviewer.models.submissions.SubmissionRequest;
 import me.kartikarora.udacityreviewer.models.waits.Waits;
@@ -71,8 +72,8 @@ public class UdacityReviewAPIUtils {
         @GET("me/student_feedbacks")
         Call<FeedbackList> getFeedbacks(@HeaderMap ArrayMap<String, String> headers);
 
-        @GET("/me/submissions/assigned")
-        Call<Integer> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);
+        @GET("me/submissions/assigned_count")
+        Call<AssignCount> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);
 
     }
 }

@@ -27,6 +27,7 @@ import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.adapters.CompletedAdapter;
 import me.kartikarora.udacityreviewer.datastructures.CompletedList;
 import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
+import me.kartikarora.udacityreviewer.models.me.AssignCount;
 import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
@@ -95,18 +96,7 @@ public class StatsFragment extends Fragment {
 
     private void fetchStats(final View view) {
         refreshLayout.setRefreshing(true);
-        udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                TextView textView = (TextView) view.findViewById(R.id.assignedReview);
-                textView.setText(getContext().getString(R.string.assigned_review, response.body()));
-            }
 
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
         udacityReviewService.getSubmissionsCompleted(headers).enqueue(new Callback<CompletedList>() {
             @Override
             public void onResponse(Call<CompletedList> call, final Response<CompletedList> completedResponse) {
@@ -158,6 +148,19 @@ public class StatsFragment extends Fragment {
                             recyclerView.setVisibility(View.VISIBLE);
                             refreshLayout.setRefreshing(false);
                         }
+
+                        udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {
+                            @Override
+                            public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
+                                TextView textView = (TextView) view.findViewById(R.id.assignedReview);
+                                textView.setText(getContext().getString(R.string.assigned_review, response.body().getAssignedCount()));
+                            }
+
+                            @Override
+                            public void onFailure(Call<AssignCount> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
                     }
 
                     @Override

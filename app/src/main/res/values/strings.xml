@@ -25,7 +25,7 @@
     <string name="pref_reset" translatable="false">key_reset</string>
     <string name="something_wrong">Something went wrong</string>
     <string name="invalid_udacity_token">Invalid Udacity Review API Token</string>
-    <string name="assigned_review">You have $%1$d review assigned</string>
+    <string name="assigned_review">Right now, you have %1$d reviews assigned</string>
 
 
 </resources>

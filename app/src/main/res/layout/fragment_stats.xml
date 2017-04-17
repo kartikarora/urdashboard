@@ -23,17 +23,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/assignedReview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                    android:textColor="@color/red"
-                    tools:text="You have one review"
-                    />
-
-                <TextView
                     android:id="@+id/stats_line_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,6 +39,17 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
                     tools:text="Line 2" />
+
+
+                <TextView
+                    android:id="@+id/assignedReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
+                    android:textStyle="italic"
+                    tools:text="Line 3" />
 
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>

@@ -24,7 +24,7 @@ public class Application {
     private String createdAt;
     private String updatedAt;
     private String name;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     public long getUserId() {
         return userId;
