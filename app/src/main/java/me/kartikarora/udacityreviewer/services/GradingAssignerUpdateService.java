@@ -72,6 +72,6 @@ public class GradingAssignerUpdateService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(BuildConfig.VERSION_CODE, notificationBuilder.build());
+        notificationManager.notify(BuildConfig.VERSION_CODE * (type + messageBody + action).length(), notificationBuilder.build());
     }
 }
