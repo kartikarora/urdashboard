@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Developer: chipset
@@ -74,6 +75,10 @@ public class UdacityReviewAPIUtils {
 
         @GET("me/submissions/assigned_count")
         Call<AssignCount> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);
+
+        @GET("me/submissions/completed")
+        Call<CompletedList> getSubmissionsCompletedWithDateRange(@HeaderMap ArrayMap<String, String> headers,
+                                                                 @Query("start_date") String startDate, @Query("end_date") String endDate);
 
     }
 }

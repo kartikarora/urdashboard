@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -135,7 +133,6 @@ public class StatsFragment extends Fragment {
                     @Override
                     public void onResponse(Call<FeedbackList> call, Response<FeedbackList> response) {
                         FeedbackList list = response.body();
-                        Logger.d(list);
                         CompletedList completedList = completedResponse.body();
                         for (Feedback feedback : list) {
                             Completed completed = completedList.getSubmissionFromId(feedback.getSubmissionId());
@@ -152,7 +149,7 @@ public class StatsFragment extends Fragment {
                         udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {
                             @Override
                             public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
-                                TextView textView = (TextView) view.findViewById(R.id.assignedReview);
+                                TextView textView = (TextView) view.findViewById(R.id.stats_line_three);
                                 textView.setText(getContext().getString(R.string.assigned_review, response.body().getAssignedCount()));
                             }
 

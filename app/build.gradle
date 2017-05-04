@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    def supportLibVer = "25.3.0", playServicesVer = "10.2.0"
+    def supportLibVer = "25.3.1", playServicesVer = "10.2.0"
     compile "com.android.support:appcompat-v7:${supportLibVer}"
     compile "com.android.support:recyclerview-v7:${supportLibVer}"
     compile "com.android.support:cardview-v7:${supportLibVer}"
@@ -29,10 +29,12 @@ dependencies {
     compile "com.android.support:support-vector-drawable:${supportLibVer}"
     compile "com.google.firebase:firebase-messaging:${playServicesVer}"
     compile "com.google.firebase:firebase-invites:${playServicesVer}"
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.orhanobut:logger:1.15'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.jakewharton.timber:timber:4.5.1'
     compile 'com.github.kartikarora:Potato-Library:0.1.8'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
+
 
 apply plugin: 'com.google.gms.google-services'

@@ -13,5 +13,10 @@
             android:checked="false"
             android:icon="@drawable/ic_queue"
             android:title="Check Queue" />
+        <item
+            android:id="@+id/nav_revenue"
+            android:checked="false"
+            android:icon="@drawable/ic_money"
+            android:title="See Revenue" />
     </group>
 </menu>

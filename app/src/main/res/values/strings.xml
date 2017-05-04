@@ -11,6 +11,7 @@
     <string name="line_one">%1$d reviews completed with an average time of %2$d hours, %3$d minutes and %4$d seconds per review</string>
     <string name="line_two">Earned $%1$s with an average of $%2$.2f per review</string>
     <string name="your_reviews">Your Reviews</string>
+    <string name="your_revenue">Your Revenue</string>
     <string name="completed_detail">Reviewed on %1$s, you took %2$d hours, %3$d minutes and %4$d seconds. You earned $%5$s!</string>
     <string name="feedback_detail">Feedback from student: %1$s</string>
     <string name="reset_message">This will reset the app. You will no longer receive notifications. You will have to register the device and rerun the python script again. Continue?</string>
@@ -26,6 +27,9 @@
     <string name="something_wrong">Something went wrong</string>
     <string name="invalid_udacity_token">Invalid Udacity Review API Token</string>
     <string name="assigned_review">Right now, you have %1$d reviews assigned</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

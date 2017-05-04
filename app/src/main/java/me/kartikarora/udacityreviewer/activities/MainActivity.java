@@ -22,6 +22,7 @@ import chipset.potato.Potato;
 import me.kartikarora.udacityreviewer.BuildConfig;
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.fragments.QueueFragment;
+import me.kartikarora.udacityreviewer.fragments.RevenueFragment;
 import me.kartikarora.udacityreviewer.fragments.StatsFragment;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
 
@@ -81,12 +82,17 @@ public class MainActivity extends AppCompatActivity {
                     checkedItem = id;
                     item.setChecked(true);
                     switch (id) {
-                        case R.id.nav_stats: {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
-                            break;
-                        }
                         case R.id.nav_queue: {
                             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
+                            break;
+                        }
+                        case R.id.nav_revenue: {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, RevenueFragment.newInstance()).commit();
+                            break;
+                        }
+                        case R.id.nav_stats:
+                        default: {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
                             break;
                         }
                     }
