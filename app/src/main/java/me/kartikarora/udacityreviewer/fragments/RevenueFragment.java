@@ -152,8 +152,12 @@ public class RevenueFragment extends Fragment {
                 public void onDateSet(DatePicker arg0, int year, int month, int day) {
                     startDateTextInputLayout.getEditText().setText(String.valueOf(day) + "/" +
                             (month + 1) + "/" + year);
-                    startDate = String.valueOf(year) + "-" +
-                            (month + 1) + "-" + day;
+                    final Calendar cal = Calendar.getInstance();
+                    cal.set(year, month, day, 0, 0, 0);
+                    Date date = cal.getTime();
+                    SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+                    sd.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    startDate = sd.format(date);
 
                     endDateTextInputLayout.getEditText().setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -163,12 +167,8 @@ public class RevenueFragment extends Fragment {
                                             calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                                             calendar.get(Calendar.DAY_OF_MONTH));
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            try {
-                                dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-                                dialog.getDatePicker().setMinDate(sdf.parse(startDate).getTime());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                            dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
                             dialog.show();
                         }
                     });
@@ -182,9 +182,12 @@ public class RevenueFragment extends Fragment {
                 public void onDateSet(DatePicker arg0, int year, int month, int day) {
                     endDateTextInputLayout.getEditText().setText(String.valueOf(day) + "/" +
                             (month + 1) + "/" + year);
-                    endDate = String.valueOf(year) + "-" +
-                            (month + 1) + "-" + day;
-
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(year, month, day, 23, 59, 59);
+                    Date date = cal.getTime();
+                    SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+                    sd.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    endDate = sd.format(date);
                 }
             };
 
