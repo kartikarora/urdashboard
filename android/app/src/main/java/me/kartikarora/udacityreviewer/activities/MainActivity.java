@@ -43,77 +43,72 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String udacityToken = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_udacity_token));
 
-        if (udacityToken.equals("null")) {
-            startActivity(new Intent(MainActivity.this, IntroActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        } else {
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mNavigationView = findViewById(R.id.navigation_view);
 
-            setContentView(R.layout.activity_main);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        setSupportActionBar(toolbar);
 
-            setSupportActionBar(toolbar);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-            ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
 
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    super.onDrawerClosed(drawerView);
-                }
-
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                }
-            };
-
-            mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
-            actionBarDrawerToggle.syncState();
-
-            mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    int id = item.getItemId();
-                    checkedItem = id;
-                    item.setChecked(true);
-                    switch (id) {
-                        case R.id.nav_queue: {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
-                            break;
-                        }
-                        case R.id.nav_revenue: {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, RevenueFragment.newInstance()).commit();
-                            break;
-                        }
-                        case R.id.nav_stats:
-                        default: {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
-                            break;
-                        }
-                    }
-                    mDrawerLayout.closeDrawers();
-                    return true;
-                }
-            });
-            String name = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_name));
-            String role = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_role));
-            View header = mNavigationView.getHeaderView(0);
-            TextView nameView = (TextView) header.findViewById(R.id.name);
-            TextView roleView = (TextView) header.findViewById(R.id.role);
-            TextView nameInitialView = (TextView) header.findViewById(R.id.name_initial);
-            nameView.setText(HelperUtils.getInstance().capitalize(name));
-            roleView.setText(HelperUtils.getInstance().capitalize(role));
-            nameInitialView.setText(HelperUtils.getInstance().capitalize(String.valueOf(name.charAt(0))));
-            if (checkedItem == R.id.nav_stats) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
-            } else if (checkedItem == R.id.nav_queue) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
             }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                checkedItem = id;
+                item.setChecked(true);
+                switch (id) {
+                    case R.id.nav_queue: {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
+                        break;
+                    }
+                    case R.id.nav_revenue: {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, RevenueFragment.newInstance()).commit();
+                        break;
+                    }
+                    case R.id.nav_stats:
+                    default: {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
+                        break;
+                    }
+                }
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+        String name = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_name));
+        String role = Potato.potate(MainActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_role));
+        View header = mNavigationView.getHeaderView(0);
+        TextView nameView = (TextView) header.findViewById(R.id.name);
+        TextView roleView = (TextView) header.findViewById(R.id.role);
+        TextView nameInitialView = (TextView) header.findViewById(R.id.name_initial);
+        nameView.setText(HelperUtils.getInstance().capitalize(name));
+        roleView.setText(HelperUtils.getInstance().capitalize(role));
+        nameInitialView.setText(HelperUtils.getInstance().capitalize(String.valueOf(name.charAt(0))));
+        if (checkedItem == R.id.nav_stats) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, StatsFragment.newInstance()).commit();
+        } else if (checkedItem == R.id.nav_queue) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, QueueFragment.newInstance()).commit();
         }
     }
 

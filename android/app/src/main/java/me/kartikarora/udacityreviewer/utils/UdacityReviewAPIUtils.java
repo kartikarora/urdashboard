@@ -2,6 +2,8 @@ package me.kartikarora.udacityreviewer.utils;
 
 import android.support.v4.util.ArrayMap;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.util.List;
 
 import me.kartikarora.udacityreviewer.datastructures.CompletedList;
@@ -11,6 +13,7 @@ import me.kartikarora.udacityreviewer.models.me.AssignCount;
 import me.kartikarora.udacityreviewer.models.me.Me;
 import me.kartikarora.udacityreviewer.models.submissions.SubmissionRequest;
 import me.kartikarora.udacityreviewer.models.waits.Waits;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -45,8 +48,13 @@ public class UdacityReviewAPIUtils {
     public UdacityReviewService getUdacityReviewService() {
         if (udacityReviewService == null) {
 
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addNetworkInterceptor(new StethoInterceptor())
+                    .build();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             udacityReviewService = retrofit.create(UdacityReviewService.class);

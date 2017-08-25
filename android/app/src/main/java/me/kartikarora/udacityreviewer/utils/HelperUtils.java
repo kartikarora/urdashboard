@@ -47,8 +47,12 @@ public class HelperUtils {
     }
 
     public ArrayMap<String, String> getHeaders(Context context) {
+        return getHeaders(Potato.potate(context).Preferences().getSharedPreferenceString(context.getString(R.string.pref_udacity_token)));
+    }
+
+    public ArrayMap<String, String> getHeaders(String key) {
         ArrayMap<String, String> map = new ArrayMap<>();
-        map.put("Authorization", Potato.potate(context).Preferences().getSharedPreferenceString(context.getString(R.string.pref_udacity_token)));
+        map.put("Authorization", key);
         map.put("Accept", "application/json");
         return map;
     }

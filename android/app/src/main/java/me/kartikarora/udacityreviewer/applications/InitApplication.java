@@ -2,7 +2,9 @@ package me.kartikarora.udacityreviewer.applications;
 
 import android.app.Application;
 
-import timber.log.BuildConfig;
+import com.facebook.stetho.Stetho;
+
+import me.kartikarora.udacityreviewer.BuildConfig;
 import timber.log.Timber;
 
 
@@ -20,6 +22,7 @@ public class InitApplication extends Application {
         super.onCreate();
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+            Stetho.initializeWithDefaults(getApplicationContext());
         }
     }
 }

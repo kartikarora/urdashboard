@@ -2,17 +2,11 @@ package me.kartikarora.udacityreviewer.activities;
 
 import android.content.Intent;
 import android.graphics.PointF;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageButton;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
-import java.util.List;
-
-import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.R;
 
 public class QRScanActivity extends AppCompatActivity {
@@ -42,10 +36,10 @@ public class QRScanActivity extends AppCompatActivity {
         qrView.setOnQRCodeReadListener(new QRCodeReaderView.OnQRCodeReadListener() {
             @Override
             public void onQRCodeRead(String text, PointF[] points) {
-                Potato.potate(QRScanActivity.this).Preferences()
-                        .putSharedPreference(getString(R.string.pref_udacity_token), text);
-                startActivity(new Intent(QRScanActivity.this, MainActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                /*Potato.potate(QRScanActivity.this).Preferences()
+                        .putSharedPreference(getString(R.string.pref_udacity_token), text);*/
+                startActivity(new Intent(QRScanActivity.this, OnboardingActivity.class)
+                        .putExtra(getString(R.string.pref_udacity_token),text));
             }
         });
 
