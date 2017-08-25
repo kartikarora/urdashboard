@@ -5,24 +5,54 @@
     <title>QR Code | Udacity Reviewer DashApp</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"
-            type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"
-            integrity="sha256-9MzwK2kJKBmsJFdccXoIDDtsbWFh8bjYK/C7UjB1Ay0=" crossorigin="anonymous"
-            type="text/javascript"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<input type="text" id="apikey"/>
-<button id="generate">Generate</button>
-<div id="qrcode"></div>
-</body>
-<script type="text/javascript">
-    $("#generate").click(function () {
-        var key = $("#apikey").text();
-        $("#qrcode").empty();
-        $("#qrcode").qrcode(key);
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Udacity Reviewer Dashboard</span>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" target="_blank"
+                   href="https://github.com/kartikarora/udacity-reviewer/releases/latest">
+                    Download App</a>
+                <a class="mdl-navigation__link" target="_blank"
+                   href="https://github.com/kartikarora/udacity-reviewer">View on GitHub</a>
+            </nav>
+        </div>
+    </header>
+    <main class="mdl-layout__content">
+        <div class="mdl-grid">
+            <div class=" mdl-cell mdl-cell--6-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" id="apikey">
+                    <label class="mdl-textfield__label" for="apikey">Udacity API Key</label>
+                    <span class="mdl-textfield__error">Only alphabet and no spaces, please!</span>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised" id="generate">Generate</button>
 
-    });
-</script>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col">
+                <div class="qrcode-card mdl-card mdl-shadow--4dp"></div>
+                <a class="download-qr mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">file_download</i> Download QR
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer class="mdl-mini-footer">
+        <div>Made with &hearts; by <a href="https://kartikarora.me">Kartik Arora</a></div>
+    </footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"
+        type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"
+        integrity="sha256-9MzwK2kJKBmsJFdccXoIDDtsbWFh8bjYK/C7UjB1Ay0=" crossorigin="anonymous"
+        type="text/javascript"></script>
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/core.js"></script>
 </html>

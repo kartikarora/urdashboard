@@ -1,0 +1,19 @@
+.qrcode-card.mdl-card {
+    width: 256px;
+    height: 256px;
+    display: none;
+    background: #FFFFFF;
+    padding: 4px;
+}
+
+.download-qr {
+    display: none;
+}
+
+.mdl-mini-footer {
+    justify-content: center;
+}
+
+main {
+    flex: 1 0 auto;
+}
