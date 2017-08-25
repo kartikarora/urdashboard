@@ -1,25 +1,35 @@
 package me.kartikarora.udacityreviewer.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import chipset.potato.Potato;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import me.kartikarora.udacityreviewer.R;
-import me.kartikarora.udacityreviewer.models.me.Me;
-import me.kartikarora.udacityreviewer.utils.HelperUtils;
-import me.kartikarora.udacityreviewer.utils.UdacityReviewAPIUtils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
@@ -29,77 +39,80 @@ import retrofit2.Response;
  * Date : 2/6/17
  */
 
-public class IntroActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class IntroActivity extends AppCompatActivity {
+    private static final int RC_SIGN_IN = 1001;
+    private static final String TAG = IntroActivity.class.getName();
+    private GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        TextView titleText = (TextView) findViewById(R.id.title_text);
-        TextView descriptionText = (TextView) findViewById(R.id.description_text);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
-        titleText.setText("Register Device");
-        descriptionText.setText(Html.fromHtml(
-                "Device Needs to be registered with the Udacity Review API token in order to receive notifications.\n\n" +
-                        "Always run grading-assigner.py with an additional parameter<code> --fcm-token FCM_TOKEN</code>.\n\n" +
-                        "This is not a replacement of the Udacity Review API token. Both the tokens are required."));
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-        findViewById(R.id.copy_button).setOnClickListener(new View.OnClickListener() {
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mAuth = FirebaseAuth.getInstance();
+
+        SignInButton signInButton = (SignInButton) findViewById(R.id.signin_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                HelperUtils.getInstance().copyToClipboard(IntroActivity.this,
-                        Potato.potate(IntroActivity.this).Preferences()
-                                .getSharedPreferenceString(getString(R.string.pref_fcm_token)), "FCM Token");
+            public void onClick(View view) {
+                signIn();
             }
         });
+    }
 
-
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_udacity_token))) {
-            final ProgressDialog dialog = new ProgressDialog(IntroActivity.this);
-            dialog.setMessage("Completing Registration...");
-            dialog.setCancelable(false);
-            dialog.show();
-            ArrayMap<String, String> headers = HelperUtils.getInstance().getHeaders(IntroActivity.this);
-            UdacityReviewAPIUtils.getInstance().getUdacityReviewService().getMe(headers).enqueue(new Callback<Me>() {
-                @Override
-                public void onResponse(Call<Me> call, Response<Me> response) {
-                    if (dialog.isShowing()) {
-                        dialog.hide();
-                    }
-                    String name = response.body().getName();
-                    String role = response.body().getRole();
-                    Potato.potate(IntroActivity.this).Preferences().putSharedPreference(getString(R.string.pref_name), name);
-                    Potato.potate(IntroActivity.this).Preferences().putSharedPreference(getString(R.string.pref_role), role);
-                    Toast.makeText(getApplicationContext(), "Registration Complete", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(IntroActivity.this, MainActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                }
-
-                @Override
-                public void onFailure(Call<Me> call, Throwable t) {
-                    if (dialog.isShowing()) {
-                        dialog.hide();
-                    }
-                    t.printStackTrace();
-                }
-            });
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
+            }
         }
     }
 
-    @Override
-    public void onResume() {
-        getSharedPreferences(getString(R.string.pref_udacity_token), MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
-        super.onResume();
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("keys/" + user.getUid());
+                            FirebaseAuth.getInstance().signOut();
+                        } else {
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(IntroActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
-    @Override
-    public void onPause() {
-        getSharedPreferences(getString(R.string.pref_udacity_token), MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
-        super.onPause();
-
-    }
 }
