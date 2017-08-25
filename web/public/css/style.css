@@ -6,7 +6,7 @@
     padding: 4px;
 }
 
-.download-qr {
+.download-qr, .signedin-result {
     display: none;
 }
 

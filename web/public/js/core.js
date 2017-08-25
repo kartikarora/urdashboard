@@ -13,3 +13,24 @@ $("#generate").click(function () {
 
     }
 });
+
+$("#signin").click(function () {
+    var key = $("#apikey").val();
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+        var user = result.user;
+        var keysDatabase = firebase.database();
+        keysDatabase.ref('keys/' + user['uid']).set({
+            "email": user['email'],
+            "image": user['photoURL'],
+            "apikey": key
+        });
+        $(".signedin-result").show();
+        firebase.auth().signOut().then(function () {
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+});
