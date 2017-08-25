@@ -3,7 +3,7 @@ package me.kartikarora.udacityreviewer.services;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import chipset.potato.Potato;
+import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.R;
 
 /**

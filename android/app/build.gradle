@@ -28,14 +28,18 @@ dependencies {
     compile "com.android.support:preference-v7:${supportLibVer}"
     compile "com.android.support:support-vector-drawable:${supportLibVer}"
     compile "com.google.firebase:firebase-auth:${playServicesVer}"
-    compile "com.google.android.gms:play-services-auth:${playServicesVer}"
+    compile "com.google.firebase:firebase-messaging:${playServicesVer}"
+    compile "com.google.firebase:firebase-invites:${playServicesVer}"
     compile "com.google.firebase:firebase-database:${playServicesVer}"
+    compile "com.google.android.gms:play-services-auth:${playServicesVer}"
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
     compile 'me.kartikarora.potato:library:0.2.0'
+    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
+
 
 
 apply plugin: 'com.google.gms.google-services'

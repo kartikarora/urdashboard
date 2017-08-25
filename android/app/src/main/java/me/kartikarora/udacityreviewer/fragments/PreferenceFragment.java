@@ -10,7 +10,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import chipset.potato.Potato;
+import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
 

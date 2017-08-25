@@ -9,7 +9,7 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.TimeZone;
 
-import chipset.potato.Potato;
+import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.R;
 
 import static android.content.Context.CLIPBOARD_SERVICE;

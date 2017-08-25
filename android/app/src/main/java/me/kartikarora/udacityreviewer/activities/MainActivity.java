@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.appinvite.AppInviteInvitation;
 
-import chipset.potato.Potato;
+import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.BuildConfig;
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.fragments.QueueFragment;

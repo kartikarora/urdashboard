@@ -3,6 +3,7 @@
     package="me.kartikarora.udacityreviewer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -43,6 +44,7 @@
                 android:value="me.kartikarora.udacityreviewer.activities.MainActivity" />
         </activity>
         <activity android:name=".activities.IntroActivity" />
+        <activity android:name=".activities.QRScanActivity"></activity>
     </application>
 
 </manifest>
