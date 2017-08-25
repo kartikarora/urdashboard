@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.DashboardActivity" />
 
         <service
             android:name=".services.TokenRefreshService"
@@ -33,10 +33,10 @@
         <activity
             android:name=".activities.PreferenceActivity"
             android:label="@string/title_activity_preferences"
-            android:parentActivityName=".activities.MainActivity">
+            android:parentActivityName=".activities.DashboardActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.kartikarora.udacityreviewer.activities.MainActivity" />
+                android:value="me.kartikarora.udacityreviewer.activities.DashboardActivity" />
         </activity>
         <activity android:name=".activities.IntroActivity" />
         <activity android:name=".activities.QRScanActivity" />

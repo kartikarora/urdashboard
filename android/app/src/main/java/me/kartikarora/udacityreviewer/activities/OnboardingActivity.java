@@ -69,7 +69,7 @@ public class OnboardingActivity extends AppCompatActivity {
                                                         gojiraButton.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
-                                                                startActivity(new Intent(OnboardingActivity.this, MainActivity.class)
+                                                                startActivity(new Intent(OnboardingActivity.this, DashboardActivity.class)
                                                                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                                             }
                                                         });

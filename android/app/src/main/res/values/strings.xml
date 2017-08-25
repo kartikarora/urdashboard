@@ -35,6 +35,10 @@
     <string name="onboarding_text">Please wait while the your dashboard is getting ready</string>
     <string name="onboarding_text_complete">Your dashboard is ready</string>
     <string name="goto_dashboard">Goto Dashboard</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_revenue">Revenue</string>
+    <string name="nav_queue">Queue</string>
+    <string name="nav_me">Me</string>
 
 
 </resources>

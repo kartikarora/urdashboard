@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         String udacityToken = Potato.potate(SplashActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_udacity_token));
-        final Class toClass = udacityToken == null ? IntroActivity.class : MainActivity.class;
+        final Class toClass = udacityToken == null ? IntroActivity.class : DashboardActivity.class;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

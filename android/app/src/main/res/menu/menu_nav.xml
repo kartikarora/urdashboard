@@ -6,17 +6,23 @@
             android:id="@+id/nav_stats"
             android:checked="false"
             android:icon="@drawable/ic_assignment"
-            android:title="View Stats" />
+            android:title="@string/nav_stats" />
+
+        <item
+            android:id="@+id/nav_revenue"
+            android:checked="false"
+            android:icon="@drawable/ic_money"
+            android:title="@string/nav_revenue" />
 
         <item
             android:id="@+id/nav_queue"
             android:checked="false"
             android:icon="@drawable/ic_queue"
-            android:title="Check Queue" />
+            android:title="@string/nav_queue" />
         <item
-            android:id="@+id/nav_revenue"
+            android:id="@+id/nav_me"
             android:checked="false"
-            android:icon="@drawable/ic_money"
-            android:title="See Revenue" />
+            android:icon="@drawable/ic_account"
+            android:title="@string/nav_me" />
     </group>
 </menu>
