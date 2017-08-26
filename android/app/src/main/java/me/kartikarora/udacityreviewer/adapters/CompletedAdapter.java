@@ -66,22 +66,7 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (completed.getFeedback() != null) {
-            Feedback feedback = completed.getFeedback();
-            if (feedback.getBody() != null) {
-                holder.feedback.setText(context.getString(R.string.feedback_detail, feedback.getBody()));
-            } else {
-                holder.feedback.setVisibility(View.GONE);
-            }
-            if (feedback.getRating() > 0.0) {
-                holder.ratingBar.setRating(feedback.getRating());
-            } else {
-                holder.ratingBar.setVisibility(View.GONE);
-            }
-        } else {
-            holder.feedback.setVisibility(View.GONE);
-            holder.ratingBar.setVisibility(View.GONE);
-        }
+
     }
 
     @Override
@@ -90,15 +75,12 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, detail, feedback;
-        AppCompatRatingBar ratingBar;
+        TextView name, detail;
 
         ViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.completed_name);
-            detail = (TextView) itemView.findViewById(R.id.completed_detail);
-            feedback = (TextView) itemView.findViewById(R.id.feedback_detail);
-            ratingBar = (AppCompatRatingBar) itemView.findViewById(R.id.completed_rating);
+            name = itemView.findViewById(R.id.completed_name);
+            detail = itemView.findViewById(R.id.completed_detail);
         }
     }
 

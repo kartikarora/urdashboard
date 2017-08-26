@@ -1,8 +1,10 @@
 package me.kartikarora.udacityreviewer.fragments;
 
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.fujiyuu75.sequent.Sequent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,9 +30,7 @@ import java.util.TimeZone;
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.adapters.CompletedAdapter;
 import me.kartikarora.udacityreviewer.datastructures.CompletedList;
-import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
 import me.kartikarora.udacityreviewer.models.me.AssignCount;
-import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
 import me.kartikarora.udacityreviewer.utils.UdacityReviewAPIUtils;
@@ -44,6 +49,7 @@ public class StatsFragment extends Fragment {
     private ArrayMap<String, String> headers;
     private RecyclerView recyclerView;
     private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
+    private ProgressBar progressBar;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -71,80 +77,84 @@ public class StatsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         headers = HelperUtils.getInstance().getHeaders(getContext());
-        recyclerView = (RecyclerView) view.findViewById(R.id.completed_recycle_view);
+        recyclerView = view.findViewById(R.id.completed_recycle_view);
+        progressBar = view.findViewById(R.id.progress_bar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
 
-        fetchStats(view);
+        if (isAdded()) {
+            fetchStats(view);
+        }
     }
 
     private void fetchStats(final View view) {
         udacityReviewService.getSubmissionsCompleted(headers).enqueue(new Callback<CompletedList>() {
             @Override
             public void onResponse(Call<CompletedList> call, final Response<CompletedList> completedResponse) {
-                CompletedList completedList = completedResponse.body();
-                Collections.sort(completedList);
-                recyclerView.setAdapter(new CompletedAdapter(completedList));
-                totalRevs = completedList.size();
-                for (Completed project : completedList) {
-                    avgEarned += Double.parseDouble(project.getPrice());
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                    try {
-                        Date createdDate = format.parse(project.getCreatedAt());
-                        Date completedDate = format.parse(project.getCompletedAt());
-                        long diff = completedDate.getTime() - createdDate.getTime();
-                        avgTime += diff;
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                String totalEarned = HelperUtils.getInstance().priceWithCommas(String.valueOf(avgEarned));
-                avgEarned /= totalRevs;
-                avgTime /= totalRevs;
-                Calendar averageTime = Calendar.getInstance();
-                averageTime.setTime(new Date(avgTime));
-                averageTime.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-                TextView lineOne = (TextView) view.findViewById(R.id.stats_line_one);
-                TextView lineTwo = (TextView) view.findViewById(R.id.stats_line_two);
-
-                if (isAdded()) {
-                    lineOne.setText(getString(R.string.line_one, totalRevs, averageTime.get(Calendar.HOUR_OF_DAY),
-                            averageTime.get(Calendar.MINUTE), averageTime.get(Calendar.SECOND)));
-                    lineTwo.setText(getString(R.string.line_two, totalEarned, avgEarned));
-                }
-                udacityReviewService.getFeedbacks(headers).enqueue(new Callback<FeedbackList>() {
+                udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {
                     @Override
-                    public void onResponse(Call<FeedbackList> call, Response<FeedbackList> response) {
-                        FeedbackList list = response.body();
+                    public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
+
+                        TextView lineOne = view.findViewById(R.id.stats_line_one);
+                        TextView lineTwo = view.findViewById(R.id.stats_line_two);
+                        TextView lineThree = view.findViewById(R.id.stats_line_three);
+                        TextView reviewsTitle = view.findViewById(R.id.reviews_title);
+                        ConstraintLayout layout = view.findViewById(R.id.layout);
+
                         CompletedList completedList = completedResponse.body();
-                        for (Feedback feedback : list) {
-                            Completed completed = completedList.getSubmissionFromId(feedback.getSubmissionId());
-                            completed.setFeedback(feedback);
+                        Collections.sort(completedList);
+                        recyclerView.setAdapter(new CompletedAdapter(completedList));
+                        totalRevs = completedList.size();
+                        for (Completed project : completedList) {
+                            avgEarned += Double.parseDouble(project.getPrice());
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                            try {
+                                Date createdDate = format.parse(project.getCreatedAt());
+                                Date completedDate = format.parse(project.getCompletedAt());
+                                long diff = completedDate.getTime() - createdDate.getTime();
+                                avgTime += diff;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
-
+                        String totalEarned = HelperUtils.getInstance().priceWithCommas(String.valueOf(avgEarned));
+                        avgEarned /= totalRevs;
+                        avgTime /= totalRevs;
+                        Calendar averageTime = Calendar.getInstance();
+                        averageTime.setTime(new Date(avgTime));
+                        averageTime.setTimeZone(TimeZone.getTimeZone("UTC"));
                         if (isAdded()) {
-                            view.findViewById(R.id.stats_app_bar).setVisibility(View.VISIBLE);
-                            view.findViewById(R.id.reviews_title).setVisibility(View.VISIBLE);
+                            lineOne.setText(getContext().getString(R.string.line_one, totalRevs, averageTime.get(Calendar.HOUR_OF_DAY),
+                                    averageTime.get(Calendar.MINUTE), averageTime.get(Calendar.SECOND)));
+                            lineTwo.setText(getContext().getString(R.string.line_two, totalEarned, avgEarned));
+                            lineThree.setText(getContext().getString(R.string.assigned_review, response.body().getAssignedCount()));
+
+                            Sequent.origin(layout).anim(getContext(), com.fujiyuu75.sequent.Animation.FADE_IN_UP)
+                                    .duration(1000).start();
+                            Sequent.origin(recyclerView).anim(getContext(), com.fujiyuu75.sequent.Animation.FADE_IN_UP)
+                                    .duration(1000).start();
+
+                            lineOne.setVisibility(View.VISIBLE);
+                            lineTwo.setVisibility(View.VISIBLE);
+                            lineThree.setVisibility(View.VISIBLE);
+                            reviewsTitle.setVisibility(View.VISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
+
+                            YoYo.with(Techniques.FadeOut)
+                                    .duration(1000)
+                                    .onEnd(new YoYo.AnimatorCallback() {
+                                        @Override
+                                        public void call(Animator animator) {
+                                            progressBar.setVisibility(View.GONE);
+                                        }
+                                    })
+                                    .playOn(progressBar);
                         }
-
-                        udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {
-                            @Override
-                            public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
-                                TextView textView = (TextView) view.findViewById(R.id.stats_line_three);
-                                textView.setText(getContext().getString(R.string.assigned_review, response.body().getAssignedCount()));
-                            }
-
-                            @Override
-                            public void onFailure(Call<AssignCount> call, Throwable t) {
-                                t.printStackTrace();
-                            }
-                        });
                     }
 
                     @Override
-                    public void onFailure(Call<FeedbackList> call, Throwable t) {
+                    public void onFailure(Call<AssignCount> call, Throwable t) {
                         t.printStackTrace();
                     }
                 });

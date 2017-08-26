@@ -1,7 +1,6 @@
 package me.kartikarora.udacityreviewer.activities;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -48,6 +47,9 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        int selectedItem = savedInstanceState == null ? R.id.nav_stats : savedInstanceState.getInt("selected_item", R.id.nav_stats);
+        mNavigationView.setSelectedItemId(selectedItem);
+        switchFragment(selectedItem);
 
         mNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
@@ -58,18 +60,18 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    protected void onSaveInstanceState(Bundle outState) {
         int selectedItem = mNavigationView.getSelectedItemId();
         outState.putInt("selected_item", selectedItem);
-        super.onSaveInstanceState(outState, outPersistentState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
         int selectedItem = savedInstanceState.getInt("selected_item", R.id.nav_stats);
         mNavigationView.setSelectedItemId(selectedItem);
         switchFragment(selectedItem);
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     private void switchFragment(int id) {
