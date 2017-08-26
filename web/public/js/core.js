@@ -23,6 +23,7 @@ $("#signin").click(function () {
         keysDatabase.ref('keys/' + user['uid']).set({
             "email": user['email'],
             "image": user['photoURL'],
+            "dislpay_name": user['displayName'],
             "apikey": key
         });
         $(".signedin-result").show();
