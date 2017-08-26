@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,9 +33,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StatsFragment extends Fragment {
 
     private static final String LOG_TAG = StatsFragment.class.getName();
@@ -48,7 +44,6 @@ public class StatsFragment extends Fragment {
     private ArrayMap<String, String> headers;
     private RecyclerView recyclerView;
     private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
-    private SwipeRefreshLayout refreshLayout;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -79,22 +74,11 @@ public class StatsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.completed_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 
-        refreshLayout.setColorSchemeResources(R.color.accent);
-        refreshLayout.setRefreshing(true);
         fetchStats(view);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchStats(view);
-            }
-        });
     }
 
     private void fetchStats(final View view) {
-        refreshLayout.setRefreshing(true);
-
         udacityReviewService.getSubmissionsCompleted(headers).enqueue(new Callback<CompletedList>() {
             @Override
             public void onResponse(Call<CompletedList> call, final Response<CompletedList> completedResponse) {
@@ -143,7 +127,6 @@ public class StatsFragment extends Fragment {
                             view.findViewById(R.id.stats_app_bar).setVisibility(View.VISIBLE);
                             view.findViewById(R.id.reviews_title).setVisibility(View.VISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
-                            refreshLayout.setRefreshing(false);
                         }
 
                         udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {

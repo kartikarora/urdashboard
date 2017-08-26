@@ -1,6 +1,5 @@
 package me.kartikarora.udacityreviewer.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -15,6 +14,7 @@ import me.kartikarora.udacityreviewer.fragments.MeFragment;
 import me.kartikarora.udacityreviewer.fragments.QueueFragment;
 import me.kartikarora.udacityreviewer.fragments.RevenueFragment;
 import me.kartikarora.udacityreviewer.fragments.StatsFragment;
+import me.kartikarora.udacityreviewer.utils.HelperUtils;
 
 /**
  * Developer: chipset
@@ -32,7 +32,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        HelperUtils.getInstance().changeStatusBarColor(DashboardActivity.this);
 
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -42,29 +43,17 @@ public class DashboardActivity extends AppCompatActivity {
         mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment;
-                switch (item.getItemId()) {
-                    case R.id.nav_revenue:
-                        fragment = RevenueFragment.newInstance();
-                        break;
-                    case R.id.nav_queue:
-                        fragment = QueueFragment.newInstance();
-                        break;
-                    case R.id.nav_me:
-                        fragment = MeFragment.newInstance();
-                        break;
-                    case R.id.nav_stats:
-                    default:
-                        fragment = StatsFragment.newInstance();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragment)
-                        .commit();
+                switchFragment(item.getItemId());
                 return true;
             }
         });
 
+
+        mNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+            }
+        });
 
     }
 
@@ -80,5 +69,28 @@ public class DashboardActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         int selectedItem = savedInstanceState.getInt("selected_item", R.id.nav_stats);
         mNavigationView.setSelectedItemId(selectedItem);
+        switchFragment(selectedItem);
+    }
+
+    private void switchFragment(int id) {
+        Fragment fragment;
+        switch (id) {
+            case R.id.nav_revenue:
+                fragment = RevenueFragment.newInstance();
+                break;
+            case R.id.nav_queue:
+                fragment = QueueFragment.newInstance();
+                break;
+            case R.id.nav_me:
+                fragment = MeFragment.newInstance();
+                break;
+            case R.id.nav_stats:
+            default:
+                fragment = StatsFragment.newInstance();
+                break;
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
     }
 }

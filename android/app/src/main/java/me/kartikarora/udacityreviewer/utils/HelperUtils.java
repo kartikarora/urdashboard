@@ -1,9 +1,13 @@
 package me.kartikarora.udacityreviewer.utils;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -64,5 +68,17 @@ public class HelperUtils {
 
     public Date utcToDefault(Date utcDate, Date localDate) {
         return new Date(utcDate.getTime() + TimeZone.getDefault().getOffset(localDate.getTime()));
+    }
+
+    public void changeStatusBarColor(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View view = activity.getWindow().getDecorView();
+            int flags = view.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity.getApplicationContext(), R.color.primary_light));
+        } else {
+            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity.getApplicationContext(), R.color.primary_dark));
+        }
     }
 }

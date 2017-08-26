@@ -34,6 +34,8 @@ public class OnboardingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
 
+        HelperUtils.getInstance().changeStatusBarColor(OnboardingActivity.this);
+
         final String apikey = getIntent().getStringExtra(getString(R.string.pref_udacity_token));
         if (TextUtils.isEmpty(apikey)) {
             Toast.makeText(OnboardingActivity.this, "Invalid Udacity Review API token", Toast.LENGTH_LONG).show();

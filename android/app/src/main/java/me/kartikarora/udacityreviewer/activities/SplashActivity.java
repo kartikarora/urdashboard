@@ -11,6 +11,7 @@ import android.view.View;
 
 import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.R;
+import me.kartikarora.udacityreviewer.utils.HelperUtils;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,15 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            View view = getWindow().getDecorView();
-            int flags = view.getSystemUiVisibility();
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
-        } else {
-            getWindow().setStatusBarColor(ContextCompat.getColor(SplashActivity.this, R.color.primary_dark));
-        }
+        HelperUtils.getInstance().changeStatusBarColor(SplashActivity.this);
 
         String udacityToken = Potato.potate(SplashActivity.this).Preferences().getSharedPreferenceString(getString(R.string.pref_udacity_token));
         final Class toClass = udacityToken == null ? IntroActivity.class : DashboardActivity.class;

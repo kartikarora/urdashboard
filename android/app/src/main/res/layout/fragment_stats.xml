@@ -1,85 +1,81 @@
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.kartikarora.udacityreviewer.fragments.StatsFragment">
+    android:background="@color/primary_light"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/stats_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:visibility="visible">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/stats_app_bar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/stats_line_one"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                    tools:text="Line 1" />
-
-                <TextView
-                    android:id="@+id/stats_line_two"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
-                    tools:text="Line 2" />
-
-
-                <TextView
-                    android:id="@+id/stats_line_three"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
-                    android:textStyle="italic"
-                    tools:text="Line 3" />
-
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/reviews_title"
+                android:id="@+id/stats_line_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:fontFamily="sans-serif-condensed"
-                android:text="@string/your_reviews"
-                android:textColor="@android:color/black"
-                android:textSize="32sp"
-                android:textStyle="italic"
-                android:visibility="gone" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/primary"
+                tools:text="Line 1" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/completed_recycle_view"
+            <TextView
+                android:id="@+id/stats_line_two"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/reviews_title"
-                android:visibility="gone"
-                tools:listitem="@layout/completed_item" />
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/primary"
+                tools:text="Line 2" />
 
-        </RelativeLayout>
-    </LinearLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+
+            <TextView
+                android:id="@+id/stats_line_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/primary"
+                android:textStyle="italic"
+                tools:text="Line 3" />
+
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/reviews_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/your_reviews"
+            android:textColor="@android:color/black"
+            android:textSize="32sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/completed_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/reviews_title"
+            android:visibility="gone"
+            tools:listitem="@layout/completed_item" />
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
