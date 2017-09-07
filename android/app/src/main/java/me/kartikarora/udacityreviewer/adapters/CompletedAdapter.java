@@ -50,7 +50,7 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
         try {
-            Date createdDate = format.parse(completed.getCreatedAt());
+            Date createdDate = format.parse(completed.getAssignedAt());
             Date completedDate = format.parse(completed.getCompletedAt());
             long diff = completedDate.getTime() - createdDate.getTime();
             Calendar completedDuration = Calendar.getInstance();

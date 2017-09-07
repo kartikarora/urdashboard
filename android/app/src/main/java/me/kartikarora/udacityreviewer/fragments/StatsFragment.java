@@ -23,19 +23,14 @@ import android.widget.TextView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import me.kartikarora.udacityreviewer.BuildConfig;
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.adapters.CompletedAdapter;
 import me.kartikarora.udacityreviewer.adapters.FeedbackAdapter;
+import me.kartikarora.udacityreviewer.models.Computed;
 import me.kartikarora.udacityreviewer.models.me.AssignCount;
 import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
@@ -48,9 +43,6 @@ import retrofit2.Response;
 public class StatsFragment extends Fragment {
 
     private static final String LOG_TAG = StatsFragment.class.getName();
-    private int totalRevs = 0;
-    private double avgEarned = 0.0;
-    private long avgTime = 0;
 
 
     private ArrayMap<String, String> headers;
@@ -107,34 +99,17 @@ public class StatsFragment extends Fragment {
                 CardView statusHeadCardView = view.findViewById(R.id.stats_lines_card_view);
                 RecyclerView recyclerView = view.findViewById(R.id.completed_recycle_view);
 
-
                 List<Completed> completedList = completedResponse.body();
-                Collections.sort(completedList);
-                recyclerView.setAdapter(new CompletedAdapter(completedList));
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                totalRevs = completedList.size();
-                for (Completed project : completedList) {
-                    avgEarned += Double.parseDouble(project.getPrice());
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                    try {
-                        Date createdDate = format.parse(project.getCreatedAt());
-                        Date completedDate = format.parse(project.getCompletedAt());
-                        long diff = completedDate.getTime() - createdDate.getTime();
-                        avgTime += diff;
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                String totalEarned = HelperUtils.getInstance().priceWithCommas(String.valueOf(avgEarned));
-                avgEarned /= totalRevs;
-                avgTime /= totalRevs;
-                Calendar averageTime = Calendar.getInstance();
-                averageTime.setTime(new Date(avgTime));
-                averageTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+                Computed computed = HelperUtils.getInstance().computeHeavyStuffFromCompletedList(completedList);
                 if (isAdded()) {
-                    lineOne.setText(getContext().getString(R.string.line_one, totalRevs, averageTime.get(Calendar.HOUR_OF_DAY),
-                            averageTime.get(Calendar.MINUTE), averageTime.get(Calendar.SECOND)));
-                    lineTwo.setText(getContext().getString(R.string.line_two, totalEarned, avgEarned));
+                    lineOne.setText(getContext().getString(R.string.line_one, computed.getTotalCompleted(),
+                            computed.getAverageTime().get(Calendar.HOUR_OF_DAY),
+                            computed.getAverageTime().get(Calendar.MINUTE),
+                            computed.getAverageTime().get(Calendar.SECOND)));
+                    lineTwo.setText(getContext().getString(R.string.line_two, computed.getTotalEarned(),
+                            computed.getAvgEarned()));
+                    recyclerView.setAdapter(new CompletedAdapter(completedList));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                     statusHeadCardView.setVisibility(View.VISIBLE);
                     reviewsTitle.setVisibility(View.VISIBLE);
@@ -233,9 +208,15 @@ public class StatsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        callCompleted.cancel();
-        callFeedback.cancel();
-        callAssignCount.cancel();
+        if (callCompleted != null) {
+            callCompleted.cancel();
+        }
+        if (callFeedback != null) {
+            callFeedback.cancel();
+        }
+        if (callAssignCount != null) {
+            callAssignCount.cancel();
+        }
     }
 
     private void setupCalls() {

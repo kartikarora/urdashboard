@@ -29,4 +29,9 @@
         <item name="android:colorControlActivated">@color/primary_dark</item>
     </style>
 
+    <style name="ButtonLight" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/primary</item>
+        <item name="colorButtonNormal">@color/primary_light</item>
+    </style>
+
 </resources>

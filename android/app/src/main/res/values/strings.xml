@@ -39,11 +39,17 @@
     <string name="onboarding_text_complete">Your dashboard is ready</string>
     <string name="goto_dashboard">Goto Dashboard</string>
     <string name="nav_stats">Stats</string>
-    <string name="nav_revenue">Revenue</string>
+    <string name="nav_revenue">Earnings</string>
     <string name="nav_queue">Queue</string>
     <string name="nav_me">Me</string>
     <string name="feedbacks">Feedbacks</string>
     <string name="swipe_up_feedbacks">Swipe up to view feedbacks</string>
+    <string name="end_date">End Date</string>
+    <string name="start_date">Start Date</string>
+    <string name="today_s_earnings">Today\'s earnings</string>
+    <string name="this_month_s_earnings">This month\'s earnings</string>
+    <string name="customise_earning_report">Customise earning report</string>
+    <string name="calculate_earnings">Calculate Earnings</string>
 
 
 </resources>

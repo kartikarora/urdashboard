@@ -10,11 +10,19 @@ import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import me.kartikarora.potato.Potato;
 import me.kartikarora.udacityreviewer.R;
+import me.kartikarora.udacityreviewer.models.Computed;
+import me.kartikarora.udacityreviewer.models.submissions.Completed;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -94,5 +102,35 @@ public class HelperUtils {
             flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             view.setSystemUiVisibility(flags);
         }
+    }
+
+    public Computed computeHeavyStuffFromCompletedList(List<Completed> completedList) {
+        Collections.sort(completedList);
+
+        int totalCompleted = completedList.size();
+        double avgEarned = 0.0;
+        long avgTime = 0;
+        for (Completed project : completedList) {
+            avgEarned += Double.parseDouble(project.getPrice());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+            try {
+                Date createdDate = format.parse(project.getAssignedAt());
+                Date completedDate = format.parse(project.getCompletedAt());
+                long diff = completedDate.getTime() - createdDate.getTime();
+                avgTime += diff;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        String totalEarned = HelperUtils.getInstance().priceWithCommas(String.format("%.2f", avgEarned));
+        if (totalCompleted > 0) {
+            avgEarned /= totalCompleted;
+            avgTime /= totalCompleted;
+        }
+        Calendar averageTime = Calendar.getInstance();
+        averageTime.setTime(new Date(avgTime));
+        averageTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        return new Computed(totalCompleted, averageTime, totalEarned, avgEarned);
     }
 }
