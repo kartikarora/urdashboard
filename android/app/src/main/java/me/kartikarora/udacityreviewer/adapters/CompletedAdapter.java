@@ -1,7 +1,6 @@
 package me.kartikarora.udacityreviewer.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import me.kartikarora.udacityreviewer.R;
-import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
 
@@ -42,7 +40,7 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.completed_item, parent, false));
+                .inflate(R.layout.item_completed, parent, false));
     }
 
     @Override

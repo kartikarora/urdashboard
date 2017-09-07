@@ -25,7 +25,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import me.kartikarora.udacityreviewer.R;
-import me.kartikarora.udacityreviewer.datastructures.CompletedList;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
 import me.kartikarora.udacityreviewer.utils.UdacityReviewAPIUtils;

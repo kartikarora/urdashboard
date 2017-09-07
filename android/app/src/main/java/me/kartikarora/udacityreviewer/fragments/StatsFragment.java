@@ -3,10 +3,13 @@ package me.kartikarora.udacityreviewer.fragments;
 
 import android.animation.Animator;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +33,9 @@ import java.util.TimeZone;
 
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.adapters.CompletedAdapter;
+import me.kartikarora.udacityreviewer.adapters.FeedbackAdapter;
 import me.kartikarora.udacityreviewer.models.me.AssignCount;
+import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.utils.HelperUtils;
 import me.kartikarora.udacityreviewer.utils.UdacityReviewAPIUtils;
@@ -98,6 +103,7 @@ public class StatsFragment extends Fragment {
                 CardView statusHeadCardView = view.findViewById(R.id.stats_lines_card_view);
                 RecyclerView recyclerView = view.findViewById(R.id.completed_recycle_view);
 
+
                 List<Completed> completedList = completedResponse.body();
                 Collections.sort(completedList);
                 recyclerView.setAdapter(new CompletedAdapter(completedList));
@@ -126,7 +132,6 @@ public class StatsFragment extends Fragment {
                             averageTime.get(Calendar.MINUTE), averageTime.get(Calendar.SECOND)));
                     lineTwo.setText(getContext().getString(R.string.line_two, totalEarned, avgEarned));
 
-
                     statusHeadCardView.setVisibility(View.VISIBLE);
                     reviewsTitle.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
@@ -140,13 +145,55 @@ public class StatsFragment extends Fragment {
                                 }
                             })
                             .playOn(progressBar);
+
                 }
+
+                udacityReviewService.getFeedbacks(headers).enqueue(new Callback<List<Feedback>>() {
+                    @Override
+                    public void onResponse(Call<List<Feedback>> call, Response<List<Feedback>> response) {
+                        ConstraintLayout bottomSheetLayout = view.findViewById(R.id.feedback_bottom_sheet);
+                        RecyclerView feedbacksRecyclerView = view.findViewById(R.id.feedback_recycler_view);
+                        final AppCompatTextView feedbacksTextView = view.findViewById(R.id.feedbacks_text_view);
+                        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
+
+                        feedbacksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        feedbacksRecyclerView.setAdapter(new FeedbackAdapter(response.body()));
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        bottomSheetLayout.setVisibility(View.VISIBLE);
+
+                        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                            @Override
+                            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                                    feedbacksTextView.setText(getString(R.string.feedbacks));
+                                    HelperUtils.getInstance().changeStatusBarColor(getActivity(), R.color.primary);
+                                    HelperUtils.getInstance().clearLightStatusBar(getActivity());
+                                } else {
+                                    feedbacksTextView.setText(R.string.swipe_up_feedbacks);
+                                    HelperUtils.getInstance().changeStatusBarColor(getActivity());
+                                }
+                            }
+
+                            @Override
+                            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Feedback>> call, Throwable t) {
+
+                    }
+                });
+
                 udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {
                     @Override
                     public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
-                        lineThree.setText(getContext().getResources().getQuantityString(R.plurals.assigned_review,
-                                response.body().getAssignedCount(), response.body().getAssignedCount()));
-
+                        if (isAdded()) {
+                            lineThree.setText(getContext().getResources().getQuantityString(R.plurals.assigned_review,
+                                    response.body().getAssignedCount(), response.body().getAssignedCount()));
+                        }
                     }
 
                     @Override

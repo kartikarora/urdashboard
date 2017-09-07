@@ -20,4 +20,13 @@
         <item name="cardBackgroundColor">@color/primary</item>
     </style>
 
+    <style name="FeedbackCardStyle" parent="HeadingCardStyle">
+        <item name="cardBackgroundColor">@color/primary_light</item>
+    </style>
+
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Indicator">
+        <item name="android:colorControlNormal">@color/primary</item>
+        <item name="android:colorControlActivated">@color/primary_dark</item>
+    </style>
+
 </resources>

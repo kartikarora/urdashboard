@@ -30,7 +30,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.queue_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_queue, parent, false));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.ViewHolder> 
 
         ViewHolder(View itemView) {
             super(itemView);
-            queueText = (TextView) itemView.findViewById(R.id.queue_text);
+            queueText = itemView.findViewById(R.id.queue_text);
         }
     }
 

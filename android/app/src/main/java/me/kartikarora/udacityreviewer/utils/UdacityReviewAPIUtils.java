@@ -6,10 +6,9 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.List;
 
-import me.kartikarora.udacityreviewer.datastructures.CompletedList;
-import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
 import me.kartikarora.udacityreviewer.models.certifications.Certification;
 import me.kartikarora.udacityreviewer.models.me.AssignCount;
+import me.kartikarora.udacityreviewer.models.me.Feedback;
 import me.kartikarora.udacityreviewer.models.me.Me;
 import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.models.submissions.SubmissionRequest;
@@ -80,7 +79,7 @@ public class UdacityReviewAPIUtils {
         Call<List<Waits>> getWaits(@HeaderMap ArrayMap<String, String> headers, @Path("id") String id);
 
         @GET("me/student_feedbacks")
-        Call<FeedbackList> getFeedbacks(@HeaderMap ArrayMap<String, String> headers);
+        Call<List<Feedback>> getFeedbacks(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me/submissions/assigned_count")
         Call<AssignCount> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);

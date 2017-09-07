@@ -1,8 +1,5 @@
 package me.kartikarora.udacityreviewer.models.me;
 
-import android.support.annotation.Nullable;
-
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -13,75 +10,66 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Feedback {
-
     @SerializedName("id")
-    @Expose
-    private long id;
+    private int id;
     @SerializedName("rubric_id")
-    @Expose
-    private long rubricId;
+    private int rubric_id;
     @SerializedName("submission_id")
-    @Expose
-    private long submissionId;
+    private int submission_id;
     @SerializedName("user_id")
-    @Expose
-    private long userId;
+    private int user_id;
     @SerializedName("rating")
-    @Expose
-    private long rating;
+    private int rating;
     @SerializedName("body")
-    @Expose
     private String body;
     @SerializedName("created_at")
-    @Expose
-    private String createdAt;
+    private String created_at;
     @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
+    private String updated_at;
     @SerializedName("grader_id")
-    @Expose
-    private long graderId;
+    private int grader_id;
     @SerializedName("read_at")
-    @Expose
-    private String readAt;
+    private String read_at;
+    @SerializedName("project")
+    private Project project;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getRubricId() {
-        return rubricId;
+    public int getRubric_id() {
+        return rubric_id;
     }
 
-    public void setRubricId(long rubricId) {
-        this.rubricId = rubricId;
+    public void setRubric_id(int rubric_id) {
+        this.rubric_id = rubric_id;
     }
 
-    public long getSubmissionId() {
-        return submissionId;
+    public int getSubmission_id() {
+        return submission_id;
     }
 
-    public void setSubmissionId(long submissionId) {
-        this.submissionId = submissionId;
+    public void setSubmission_id(int submission_id) {
+        this.submission_id = submission_id;
     }
 
-    public long getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public long getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(@Nullable long rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -89,41 +77,61 @@ public class Feedback {
         return body;
     }
 
-    public void setBody(@Nullable String body) {
+    public void setBody(String body) {
         this.body = body;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public long getGraderId() {
-        return graderId;
+    public int getGrader_id() {
+        return grader_id;
     }
 
-    public void setGraderId(long graderId) {
-        this.graderId = graderId;
+    public void setGrader_id(int grader_id) {
+        this.grader_id = grader_id;
     }
 
-    public String getReadAt() {
-        return readAt;
+    public String getRead_at() {
+        return read_at;
     }
 
-    public void setReadAt(String readAt) {
-        this.readAt = readAt;
+    public void setRead_at(String read_at) {
+        this.read_at = read_at;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public static class Project {
+        @SerializedName("name")
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }
 

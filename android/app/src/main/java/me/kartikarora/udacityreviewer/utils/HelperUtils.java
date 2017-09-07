@@ -80,6 +80,19 @@ public class HelperUtils {
         } else {
             color = R.color.primary_dark;
         }
+        changeStatusBarColor(activity, color);
+    }
+
+    public void changeStatusBarColor(Activity activity, int color) {
         activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity.getApplicationContext(), color));
+    }
+
+    public void clearLightStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View view = activity.getWindow().getDecorView();
+            int flags = view.getSystemUiVisibility();
+            flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+        }
     }
 }

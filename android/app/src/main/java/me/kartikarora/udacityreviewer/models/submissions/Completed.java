@@ -1,7 +1,6 @@
 package me.kartikarora.udacityreviewer.models.submissions;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import me.kartikarora.udacityreviewer.models.certifications.Project;
-import me.kartikarora.udacityreviewer.models.me.Feedback;
 
 /**
  * Developer: chipset
@@ -131,16 +129,6 @@ public class Completed implements Comparable<Completed> {
     @SerializedName("rubric")
     @Expose
     private Rubric rubric;
-
-    private Feedback feedback = null;
-
-    public Feedback getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(@Nullable Feedback feedback) {
-        this.feedback = feedback;
-    }
 
     public String getStatus() {
         return status;

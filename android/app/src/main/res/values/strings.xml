@@ -42,6 +42,8 @@
     <string name="nav_revenue">Revenue</string>
     <string name="nav_queue">Queue</string>
     <string name="nav_me">Me</string>
+    <string name="feedbacks">Feedbacks</string>
+    <string name="swipe_up_feedbacks">Swipe up to view feedbacks</string>
 
 
 </resources>
