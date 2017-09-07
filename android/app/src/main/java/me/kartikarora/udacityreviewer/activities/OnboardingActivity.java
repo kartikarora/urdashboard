@@ -47,8 +47,8 @@ public class OnboardingActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Me> call, Response<Me> response) {
                             if (response.isSuccessful()) {
-                                String name = response.body().getName();
-                                String role = response.body().getRole();
+                                final String name = response.body().getName();
+                                final String role = response.body().getRole();
                                 TextView nameTextView = findViewById(R.id.name_text_view);
                                 nameTextView.setText(getString(R.string.onboarding_text_name, name));
                                 LinearLayout layout = findViewById(R.id.text_linear_layout);
@@ -71,6 +71,12 @@ public class OnboardingActivity extends AppCompatActivity {
                                                         gojiraButton.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
+                                                                Potato.potate(OnboardingActivity.this).Preferences()
+                                                                        .putSharedPreference(getString(R.string.pref_name), name);
+                                                                Potato.potate(OnboardingActivity.this).Preferences()
+                                                                        .putSharedPreference(getString(R.string.pref_role), role);
+                                                                Potato.potate(OnboardingActivity.this).Preferences()
+                                                                        .putSharedPreference(getString(R.string.pref_udacity_token), apikey);
                                                                 startActivity(new Intent(OnboardingActivity.this, DashboardActivity.class)
                                                                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                                             }
@@ -83,12 +89,7 @@ public class OnboardingActivity extends AppCompatActivity {
                                 bar.setVisibility(View.GONE);
                                 Sequent.origin(layout).anim(OnboardingActivity.this, com.fujiyuu75.sequent.Animation.FADE_IN_UP)
                                         .duration(1000).start();
-                                Potato.potate(OnboardingActivity.this).Preferences()
-                                        .putSharedPreference(getString(R.string.pref_name), name);
-                                Potato.potate(OnboardingActivity.this).Preferences()
-                                        .putSharedPreference(getString(R.string.pref_role), role);
-                                Potato.potate(OnboardingActivity.this).Preferences()
-                                        .putSharedPreference(getString(R.string.pref_udacity_token), apikey);
+
                             }
                         }
 

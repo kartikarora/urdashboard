@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
@@ -19,9 +20,12 @@ public class QRScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscan);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         qrView = findViewById(R.id.qr_view);
         qrView.setQRDecodingEnabled(true);
-        qrView.setAutofocusInterval(1000L);
+        qrView.setAutofocusInterval(300L);
         qrView.setBackCamera();
 
         /*ImageButton flashlightToggleButton = findViewById(R.id.toggle_flashlight_button);
@@ -36,10 +40,8 @@ public class QRScanActivity extends AppCompatActivity {
         qrView.setOnQRCodeReadListener(new QRCodeReaderView.OnQRCodeReadListener() {
             @Override
             public void onQRCodeRead(String text, PointF[] points) {
-                /*Potato.potate(QRScanActivity.this).Preferences()
-                        .putSharedPreference(getString(R.string.pref_udacity_token), text);*/
                 startActivity(new Intent(QRScanActivity.this, OnboardingActivity.class)
-                        .putExtra(getString(R.string.pref_udacity_token),text));
+                        .putExtra(getString(R.string.pref_udacity_token), text));
             }
         });
 

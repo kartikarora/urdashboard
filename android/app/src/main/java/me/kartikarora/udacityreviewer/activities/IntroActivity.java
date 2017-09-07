@@ -1,10 +1,11 @@
 package me.kartikarora.udacityreviewer.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -21,7 +22,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.models.FirebaseKeys;
+import me.kartikarora.udacityreviewer.utils.HelperUtils;
 
 
 /**
@@ -63,6 +64,8 @@ public class IntroActivity extends AppCompatActivity {
 
         rootView = findViewById(android.R.id.content);
 
+        HelperUtils.getInstance().changeStatusBarColor(IntroActivity.this, R.color.primary);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -79,7 +82,7 @@ public class IntroActivity extends AppCompatActivity {
                 .build();
         mAuth = FirebaseAuth.getInstance();
 
-        SignInButton signInButton = findViewById(R.id.signin_button);
+        AppCompatButton signInButton = findViewById(R.id.signin_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,26 +157,38 @@ public class IntroActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            final ProgressDialog dialog = new ProgressDialog(IntroActivity.this);
+                            dialog.setMessage(getString(R.string.please_wait));
+                            dialog.show();
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference ref = database.getReference();
-                            DatabaseReference key = ref.child("keys/" + user.getUid());
-                            key.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    FirebaseKeys keys = dataSnapshot.getValue(FirebaseKeys.class);
-                                    String apikey = keys.getApikey();
-                                    startActivity(new Intent(IntroActivity.this, OnboardingActivity.class)
-                                            .putExtra(getString(R.string.pref_udacity_token), apikey));
-                                }
+                            final FirebaseUser user = mAuth.getCurrentUser();
 
+                            new Handler().postDelayed(new Runnable() {
                                 @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                                public void run() {
+                                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference ref = database.getReference();
+                                    DatabaseReference key = ref.child("keys/" + user.getUid());
+                                    key.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            FirebaseKeys keys = dataSnapshot.getValue(FirebaseKeys.class);
+                                            String apikey = keys.getApikey();
+                                            dialog.hide();
+                                            dialog.dismiss();
+                                            startActivity(new Intent(IntroActivity.this, OnboardingActivity.class)
+                                                    .putExtra(getString(R.string.pref_udacity_token), apikey));
+                                        }
 
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    FirebaseAuth.getInstance().signOut();
                                 }
-                            });
-                            FirebaseAuth.getInstance().signOut();
+                            }, 6000);
+
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(IntroActivity.this, "Authentication failed.",

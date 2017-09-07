@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_light"
     tools:context="me.kartikarora.udacityreviewer.activities.OnboardingActivity">
 
     <ProgressBar
@@ -69,7 +70,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/blue_bg_ripple"
         android:drawableEnd="@drawable/ic_arrow_forward"
         android:drawablePadding="16dp"
         android:elevation="4dp"
@@ -77,7 +77,9 @@
         android:padding="16dp"
         android:text="@string/goto_dashboard"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        android:textColor="@color/primary_light"
         android:textSize="24sp"
+        android:theme="@style/ButtonDark"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

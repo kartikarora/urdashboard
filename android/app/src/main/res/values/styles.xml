@@ -34,4 +34,9 @@
         <item name="colorButtonNormal">@color/primary_light</item>
     </style>
 
+    <style name="ButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/primary_light</item>
+        <item name="colorButtonNormal">@color/primary</item>
+    </style>
+
 </resources>

@@ -16,7 +16,6 @@
     <string name="feedback_detail">Feedback from student: %1$s</string>
     <string name="reset_message">This will reset the app. You will no longer receive notifications. You will have to register the device and rerun the python script again. Continue?</string>
     <string name="inactive_submission_requests">No active submission requests</string>
-    <string name="your_queue_position">Your Queue</string>
     <string name="queue_text">You are at position %1$d for %2$s</string>
 
     <string name="pref_fcm_token" translatable="false">key_fcm_token</string>
@@ -26,6 +25,10 @@
     <string name="pref_reset" translatable="false">key_reset</string>
     <string name="something_wrong">Something went wrong</string>
     <string name="invalid_udacity_token">Invalid Udacity Review API Token</string>
+    <plurals name="your_queue_position">
+        <item quantity="one">Your position in queue</item>
+        <item quantity="other">Your position in queues</item>
+    </plurals>
     <plurals name="assigned_review">
         <item quantity="one">Right now, you have %d review assigned</item>
         <item quantity="other">Right now, you have %d reviews assigned</item>
@@ -50,6 +53,10 @@
     <string name="this_month_s_earnings">This month\'s earnings</string>
     <string name="customise_earning_report">Customise earning report</string>
     <string name="calculate_earnings">Calculate Earnings</string>
+    <string name="setup_intro">Udacity Reviews API key is required for this app to work</string>
+    <string name="setup_visit">Visit https://uconnect.kartikarora.me on your PC to get started</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="qr_instruction">Position the QR code anywhere in the viewfinder</string>
 
 
 </resources>
