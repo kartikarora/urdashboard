@@ -13,6 +13,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import me.kartikarora.udacityreviewer.BuildConfig;
 import me.kartikarora.udacityreviewer.R;
 import me.kartikarora.udacityreviewer.adapters.CompletedAdapter;
 import me.kartikarora.udacityreviewer.adapters.FeedbackAdapter;
@@ -52,9 +54,12 @@ public class StatsFragment extends Fragment {
 
 
     private ArrayMap<String, String> headers;
-    ;
     private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
     private ProgressBar progressBar;
+
+    private Call<List<Completed>> callCompleted;
+    private Call<List<Feedback>> callFeedback;
+    private Call<AssignCount> callAssignCount;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -80,18 +85,17 @@ public class StatsFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        headers = HelperUtils.getInstance().getHeaders(getContext());
         progressBar = view.findViewById(R.id.progress_bar);
+        headers = HelperUtils.getInstance().getHeaders(getContext());
         udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
-
+        setupCalls();
         if (isAdded()) {
             fetchStats(view);
         }
     }
 
     private void fetchStats(final View view) {
-        udacityReviewService.getSubmissionsCompleted(headers).enqueue(new Callback<List<Completed>>() {
+        callCompleted.enqueue(new Callback<List<Completed>>() {
             @Override
             public void onResponse(Call<List<Completed>> call, final Response<List<Completed>> completedResponse) {
 
@@ -148,7 +152,7 @@ public class StatsFragment extends Fragment {
 
                 }
 
-                udacityReviewService.getFeedbacks(headers).enqueue(new Callback<List<Feedback>>() {
+                callFeedback.enqueue(new Callback<List<Feedback>>() {
                     @Override
                     public void onResponse(Call<List<Feedback>> call, Response<List<Feedback>> response) {
                         ConstraintLayout bottomSheetLayout = view.findViewById(R.id.feedback_bottom_sheet);
@@ -183,11 +187,14 @@ public class StatsFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<Feedback>> call, Throwable t) {
-
+                        t.printStackTrace();
+                        if (call.isCanceled() && BuildConfig.DEBUG) {
+                            Log.d(LOG_TAG, "Cancelled");
+                        }
                     }
                 });
 
-                udacityReviewService.getCertificationAssigned(headers).enqueue(new Callback<AssignCount>() {
+                callAssignCount.enqueue(new Callback<AssignCount>() {
                     @Override
                     public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
                         if (isAdded()) {
@@ -199,6 +206,9 @@ public class StatsFragment extends Fragment {
                     @Override
                     public void onFailure(Call<AssignCount> call, Throwable t) {
                         t.printStackTrace();
+                        if (call.isCanceled() && BuildConfig.DEBUG) {
+                            Log.d(LOG_TAG, "Cancelled");
+                        }
                     }
                 });
 
@@ -207,7 +217,36 @@ public class StatsFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Completed>> call, Throwable t) {
                 t.printStackTrace();
+                if (call.isCanceled() && BuildConfig.DEBUG) {
+                    Log.d(LOG_TAG, "Cancelled");
+                }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupCalls();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        callCompleted.cancel();
+        callFeedback.cancel();
+        callAssignCount.cancel();
+    }
+
+    private void setupCalls() {
+        if (callCompleted == null) {
+            callCompleted = udacityReviewService.getSubmissionsCompleted(headers);
+        }
+        if (callFeedback == null) {
+            callFeedback = udacityReviewService.getFeedbacks(headers);
+        }
+        if (callAssignCount == null) {
+            callAssignCount = udacityReviewService.getCertificationAssigned(headers);
+        }
     }
 }
