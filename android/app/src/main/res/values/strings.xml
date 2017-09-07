@@ -26,7 +26,10 @@
     <string name="pref_reset" translatable="false">key_reset</string>
     <string name="something_wrong">Something went wrong</string>
     <string name="invalid_udacity_token">Invalid Udacity Review API Token</string>
-    <string name="assigned_review">Right now, you have %1$d reviews assigned</string>
+    <plurals name="assigned_review">
+        <item quantity="one">Right now, you have %d review assigned</item>
+        <item quantity="other">Right now, you have %d reviews assigned</item>
+    </plurals>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

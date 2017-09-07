@@ -71,14 +71,15 @@ public class HelperUtils {
     }
 
     public void changeStatusBarColor(Activity activity) {
+        int color = R.color.primary_light;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View view = activity.getWindow().getDecorView();
             int flags = view.getSystemUiVisibility();
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             view.setSystemUiVisibility(flags);
-            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity.getApplicationContext(), R.color.primary_light));
         } else {
-            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity.getApplicationContext(), R.color.primary_dark));
+            color = R.color.primary_dark;
         }
+        activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity.getApplicationContext(), color));
     }
 }

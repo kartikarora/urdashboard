@@ -19,8 +19,8 @@ import android.widget.TextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -100,12 +100,11 @@ public class RevenueFragment extends Fragment {
                 dialog.setMessage("Please wait...");
                 dialog.show();
                 UdacityReviewAPIUtils.getInstance().getUdacityReviewService()
-                        .getSubmissionsCompletedWithDateRange(headers, startDate, endDate).enqueue(new Callback<CompletedList>() {
+                        .getSubmissionsCompletedWithDateRange(headers, startDate, endDate).enqueue(new Callback<List<Completed>>() {
                     @Override
-                    public void onResponse(Call<CompletedList> call, Response<CompletedList> response) {
+                    public void onResponse(Call<List<Completed>> call, Response<List<Completed>> response) {
                         dialog.hide();
-                        CompletedList completedList = response.body();
-                        Collections.sort(completedList);
+                        List<Completed> completedList = response.body();
                         int totalRevs = 0;
                         double avgEarned = 0.0;
                         long avgTime = 0;
@@ -137,7 +136,7 @@ public class RevenueFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<CompletedList> call, Throwable t) {
+                    public void onFailure(Call<List<Completed>> call, Throwable t) {
                         dialog.hide();
                         t.printStackTrace();
                     }

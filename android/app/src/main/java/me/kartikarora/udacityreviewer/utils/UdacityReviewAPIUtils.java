@@ -11,6 +11,7 @@ import me.kartikarora.udacityreviewer.datastructures.FeedbackList;
 import me.kartikarora.udacityreviewer.models.certifications.Certification;
 import me.kartikarora.udacityreviewer.models.me.AssignCount;
 import me.kartikarora.udacityreviewer.models.me.Me;
+import me.kartikarora.udacityreviewer.models.submissions.Completed;
 import me.kartikarora.udacityreviewer.models.submissions.SubmissionRequest;
 import me.kartikarora.udacityreviewer.models.waits.Waits;
 import okhttp3.OkHttpClient;
@@ -70,7 +71,7 @@ public class UdacityReviewAPIUtils {
         Call<List<Certification>> getCertifications(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me/submissions/completed")
-        Call<CompletedList> getSubmissionsCompleted(@HeaderMap ArrayMap<String, String> headers);
+        Call<List<Completed>> getSubmissionsCompleted(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me")
         Call<Me> getMe(@HeaderMap ArrayMap<String, String> headers);
@@ -85,7 +86,7 @@ public class UdacityReviewAPIUtils {
         Call<AssignCount> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me/submissions/completed")
-        Call<CompletedList> getSubmissionsCompletedWithDateRange(@HeaderMap ArrayMap<String, String> headers,
+        Call<List<Completed>> getSubmissionsCompletedWithDateRange(@HeaderMap ArrayMap<String, String> headers,
                                                                  @Query("start_date") String startDate, @Query("end_date") String endDate);
 
     }

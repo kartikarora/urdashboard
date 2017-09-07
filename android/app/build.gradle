@@ -20,31 +20,31 @@ android {
 }
 
 dependencies {
-    def supportLibVer = "26.0.1", playServicesVer = "11.2.0"
-    implementation 'com.android.support:support-v4:26.0.1'
-    compile "com.android.support:appcompat-v7:${supportLibVer}"
-    compile "com.android.support:recyclerview-v7:${supportLibVer}"
-    compile "com.android.support:cardview-v7:${supportLibVer}"
-    compile "com.android.support:design:${supportLibVer}"
-    compile "com.android.support:preference-v7:${supportLibVer}"
-    compile "com.android.support:support-vector-drawable:${supportLibVer}"
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.google.firebase:firebase-auth:${playServicesVer}"
-    compile "com.google.firebase:firebase-messaging:${playServicesVer}"
-    compile "com.google.firebase:firebase-invites:${playServicesVer}"
-    compile "com.google.firebase:firebase-database:${playServicesVer}"
-    compile "com.google.android.gms:play-services-auth:${playServicesVer}"
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.github.kartikarora:Potato-Library:dev-SNAPSHOT'
-    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2'
-    compile 'com.fujiyuu75:sequent:0.2.1'
-    compile 'com.daimajia.easing:library:2.0@aar'
-    compile 'com.daimajia.androidanimations:library:2.3@aar'
-    debugCompile 'com.facebook.stetho:stetho:1.5.0'
-    debugCompile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    def supportLibVer = "26.0.2", playServicesVer = "11.2.0"
+    implementation "com.android.support:appcompat-v7:${supportLibVer}"
+    implementation "com.android.support:recyclerview-v7:${supportLibVer}"
+    implementation "com.android.support:cardview-v7:${supportLibVer}"
+    implementation "com.android.support:design:${supportLibVer}"
+    implementation "com.android.support:preference-v7:${supportLibVer}"
+    implementation "com.android.support:support-vector-drawable:${supportLibVer}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.google.firebase:firebase-auth:${playServicesVer}"
+    implementation "com.google.firebase:firebase-messaging:${playServicesVer}"
+    implementation "com.google.firebase:firebase-invites:${playServicesVer}"
+    implementation "com.google.firebase:firebase-database:${playServicesVer}"
+    implementation "com.google.android.gms:play-services-auth:${playServicesVer}"
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.github.kartikarora:Potato-Library:dev-SNAPSHOT'
+    implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2'
+    implementation 'com.fujiyuu75:sequent:0.2.1'
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }
+
 
 
 
