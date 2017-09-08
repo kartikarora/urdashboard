@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.kartikarora.udacityreviewer">
+    package="me.kartikarora.urdashboard">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -15,29 +15,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.DashboardActivity" />
 
-        <service
-            android:name=".services.TokenRefreshService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".services.GradingAssignerUpdateService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name=".activities.PreferenceActivity"
             android:label="@string/title_activity_preferences"
             android:parentActivityName=".activities.DashboardActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.kartikarora.udacityreviewer.activities.DashboardActivity" />
+                android:value=".activities.DashboardActivity" />
         </activity>
         <activity android:name=".activities.IntroActivity" />
         <activity android:name=".activities.QRScanActivity" />

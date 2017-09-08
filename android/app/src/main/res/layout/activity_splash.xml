@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="me.kartikarora.udacityreviewer.activities.SplashActivity">
+    tools:context=".activities.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,11 +15,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:scaleX="2"
-        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_alternate" />
+        app:srcCompat="@drawable/ur_primary" />
 </android.support.constraint.ConstraintLayout>

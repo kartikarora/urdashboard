@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_light"
-    tools:context="me.kartikarora.udacityreviewer.activities.OnboardingActivity">
+    tools:context=".activities.OnboardingActivity">
 
     <ProgressBar
         android:id="@+id/progress_bar"

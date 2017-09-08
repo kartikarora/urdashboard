@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Udacity Reviewer</string>
+    <string name="app_name">UR Dashboard</string>
     <string name="title_activity_preferences">Preferences</string>
     <string name="share_app">Share App</string>
-    <string name="invitation_title">Udacity Reviewers Invitation</string>
-    <string name="invitation_message">Udacity Reviewers Dashboard Consolidated</string>
+    <string name="invitation_title">UR Dashboards Invitation</string>
+    <string name="invitation_message">UR Dashboards Dashboard Consolidated</string>
     <string name="invitation_custom_image">https://placehold.it/1000x1000</string>
     <string name="invitation_cta">Install Now!</string>
     <string name="open_drawer">Drawer Open</string>

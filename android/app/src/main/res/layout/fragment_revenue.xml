@@ -10,7 +10,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:context="me.kartikarora.udacityreviewer.fragments.RevenueFragment">
+        tools:context=".fragments.RevenueFragment">
 
         <android.support.v7.widget.CardView
             android:id="@+id/today_report_card"
