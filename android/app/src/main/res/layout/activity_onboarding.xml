@@ -80,7 +80,6 @@
         android:textColor="@color/primary_light"
         android:textSize="24sp"
         android:theme="@style/ButtonDark"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

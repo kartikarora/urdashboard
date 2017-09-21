@@ -11,14 +11,14 @@
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/feedbacks_text_view"
+        android:id="@+id/feedback_text_view"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:text="@string/swipe_up_feedbacks"
+        android:text="@string/swipe_up_feedback"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +35,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/feedbacks_text_view"
+        app:layout_constraintTop_toBottomOf="@id/feedback_text_view"
         tools:listitem="@layout/item_feedback" />
 </android.support.constraint.ConstraintLayout>

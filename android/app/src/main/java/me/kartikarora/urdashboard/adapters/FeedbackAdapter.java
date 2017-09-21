@@ -17,22 +17,23 @@ import me.kartikarora.urdashboard.models.me.Feedback;
  * Created by kartik on 7/9/17.
  */
 
-public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHolder> {
+public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedbackViewHolder> {
 
-    private List<Feedback> feedbacks;
+    private List<Feedback> feedbackList;
 
-    public FeedbackAdapter(List<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public FeedbackAdapter(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback, parent, false));
+    public FeedbackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new FeedbackViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_feedback, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Feedback feedback = feedbacks.get(position);
+    public void onBindViewHolder(FeedbackViewHolder holder, int position) {
+        Feedback feedback = this.feedbackList.get(position);
         holder.feedbackRatingBar.setRating(feedback.getRating());
         if (TextUtils.isEmpty(feedback.getBody())) {
             holder.feedbackBodyTextView.setVisibility(View.GONE);
@@ -44,14 +45,14 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return feedbacks.size();
+        return feedbackList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class FeedbackViewHolder extends RecyclerView.ViewHolder {
         AppCompatTextView feedbackNameTextView, feedbackBodyTextView;
         AppCompatRatingBar feedbackRatingBar;
 
-        public ViewHolder(View itemView) {
+        public FeedbackViewHolder(View itemView) {
             super(itemView);
             feedbackNameTextView = itemView.findViewById(R.id.feedback_name_text_view);
             feedbackBodyTextView = itemView.findViewById(R.id.feedback_body_text_view);

@@ -2,6 +2,7 @@ package me.kartikarora.urdashboard.activities;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.util.ArrayMap;
@@ -18,7 +19,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.fujiyuu75.sequent.Sequent;
 
-import me.kartikarora.potato.Potato;
 import me.kartikarora.urdashboard.R;
 import me.kartikarora.urdashboard.models.me.Me;
 import me.kartikarora.urdashboard.utils.HelperUtils;
@@ -71,12 +71,13 @@ public class OnboardingActivity extends AppCompatActivity {
                                                         gojiraButton.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
-                                                                Potato.potate(OnboardingActivity.this).Preferences()
-                                                                        .putSharedPreference(getString(R.string.pref_name), name);
-                                                                Potato.potate(OnboardingActivity.this).Preferences()
-                                                                        .putSharedPreference(getString(R.string.pref_role), role);
-                                                                Potato.potate(OnboardingActivity.this).Preferences()
-                                                                        .putSharedPreference(getString(R.string.pref_udacity_token), apikey);
+                                                                SharedPreferences preference = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+                                                                SharedPreferences.Editor editor = preference.edit();
+                                                                editor.clear();
+                                                                editor.putString(getString(R.string.pref_name), name);
+                                                                editor.putString(getString(R.string.pref_role), role);
+                                                                editor.putString(getString(R.string.pref_udacity_token), apikey);
+                                                                editor.commit();
                                                                 startActivity(new Intent(OnboardingActivity.this, DashboardActivity.class)
                                                                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                                             }

@@ -79,7 +79,7 @@ public class UdacityReviewAPIUtils {
         Call<List<Waits>> getWaits(@HeaderMap ArrayMap<String, String> headers, @Path("id") String id);
 
         @GET("me/student_feedbacks")
-        Call<List<Feedback>> getFeedbacks(@HeaderMap ArrayMap<String, String> headers);
+        Call<List<Feedback>> getFeedback(@HeaderMap ArrayMap<String, String> headers);
 
         @GET("me/submissions/assigned_count")
         Call<AssignCount> getCertificationAssigned(@HeaderMap ArrayMap<String, String> headers);

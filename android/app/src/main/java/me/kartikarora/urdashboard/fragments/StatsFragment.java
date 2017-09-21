@@ -50,7 +50,6 @@ public class StatsFragment extends Fragment {
     private ProgressBar progressBar;
 
     private Call<List<Completed>> callCompleted;
-    private Call<List<Feedback>> callFeedback;
     private Call<AssignCount> callAssignCount;
 
     public StatsFragment() {
@@ -94,10 +93,8 @@ public class StatsFragment extends Fragment {
                 TextView lineOne = view.findViewById(R.id.stats_line_one);
                 TextView lineTwo = view.findViewById(R.id.stats_line_two);
                 final TextView lineThree = view.findViewById(R.id.stats_line_three);
-                TextView reviewsTitle = view.findViewById(R.id.reviews_title);
                 ConstraintLayout layout = view.findViewById(R.id.layout);
                 CardView statusHeadCardView = view.findViewById(R.id.stats_lines_card_view);
-                RecyclerView recyclerView = view.findViewById(R.id.completed_recycle_view);
 
                 List<Completed> completedList = completedResponse.body();
                 Computed computed = HelperUtils.getInstance().computeHeavyStuffFromCompletedList(completedList);
@@ -108,12 +105,8 @@ public class StatsFragment extends Fragment {
                             computed.getAverageTime().get(Calendar.SECOND)));
                     lineTwo.setText(getContext().getString(R.string.line_two, computed.getTotalEarned(),
                             computed.getAvgEarned()));
-                    recyclerView.setAdapter(new CompletedAdapter(completedList));
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                     statusHeadCardView.setVisibility(View.VISIBLE);
-                    reviewsTitle.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.VISIBLE);
 
                     YoYo.with(Techniques.FadeOut)
                             .duration(600)
@@ -126,48 +119,6 @@ public class StatsFragment extends Fragment {
                             .playOn(progressBar);
 
                 }
-
-                callFeedback.enqueue(new Callback<List<Feedback>>() {
-                    @Override
-                    public void onResponse(Call<List<Feedback>> call, Response<List<Feedback>> response) {
-                        ConstraintLayout bottomSheetLayout = view.findViewById(R.id.feedback_bottom_sheet);
-                        RecyclerView feedbacksRecyclerView = view.findViewById(R.id.feedback_recycler_view);
-                        final AppCompatTextView feedbacksTextView = view.findViewById(R.id.feedbacks_text_view);
-                        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
-
-                        feedbacksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        feedbacksRecyclerView.setAdapter(new FeedbackAdapter(response.body()));
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        bottomSheetLayout.setVisibility(View.VISIBLE);
-
-                        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                            @Override
-                            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                                    feedbacksTextView.setText(getString(R.string.feedbacks));
-                                    HelperUtils.getInstance().changeStatusBarColor(getActivity(), R.color.primary);
-                                    HelperUtils.getInstance().clearLightStatusBar(getActivity());
-                                } else {
-                                    feedbacksTextView.setText(R.string.swipe_up_feedbacks);
-                                    HelperUtils.getInstance().changeStatusBarColor(getActivity());
-                                }
-                            }
-
-                            @Override
-                            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Feedback>> call, Throwable t) {
-                        t.printStackTrace();
-                        if (call.isCanceled() && BuildConfig.DEBUG) {
-                            Log.d(LOG_TAG, "Cancelled");
-                        }
-                    }
-                });
 
                 callAssignCount.enqueue(new Callback<AssignCount>() {
                     @Override
@@ -211,9 +162,6 @@ public class StatsFragment extends Fragment {
         if (callCompleted != null) {
             callCompleted.cancel();
         }
-        if (callFeedback != null) {
-            callFeedback.cancel();
-        }
         if (callAssignCount != null) {
             callAssignCount.cancel();
         }
@@ -222,9 +170,6 @@ public class StatsFragment extends Fragment {
     private void setupCalls() {
         if (callCompleted == null) {
             callCompleted = udacityReviewService.getSubmissionsCompleted(headers);
-        }
-        if (callFeedback == null) {
-            callFeedback = udacityReviewService.getFeedbacks(headers);
         }
         if (callAssignCount == null) {
             callAssignCount = udacityReviewService.getCertificationAssigned(headers);
