@@ -11,7 +11,7 @@ import timber.log.Timber;
 /**
  * Developer: chipset
  * Package : me.kartikarora.urdashboard.applications
- * Project : udacity-reviewer-android
+ * Project : UR Dashboard
  * Date : 5/4/17
  */
 

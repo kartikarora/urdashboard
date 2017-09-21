@@ -33,6 +33,14 @@
         <item quantity="one">Right now, you have %d review assigned</item>
         <item quantity="other">Right now, you have %d reviews assigned</item>
     </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -61,7 +69,8 @@
     <string name="reviews_and_feedback">My Reviews and Feedback</string>
     <string name="reviews">Reviews</string>
     <string name="pref_type">type</string>
-    <string name="stats">Your Stats</string>
+    <string name="your_stats">Your Stats</string>
+    <string name="assigned_line">%1$s submission assigned which pays $%2$.2f. You have %3$s and %4$s remaining to complete the review.</string>
 
 
 </resources>

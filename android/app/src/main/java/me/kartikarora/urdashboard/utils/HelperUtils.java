@@ -133,4 +133,25 @@ public class HelperUtils {
 
         return new Computed(totalCompleted, averageTime, totalEarned, avgEarned);
     }
+
+    public Calendar timeRemainingCalculator(String assignedAt) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+        Date expiry = null;
+        Calendar assignedCal = Calendar.getInstance();
+        try {
+            expiry = format.parse(assignedAt);
+            assignedCal.setTime(expiry);
+            assignedCal.add(Calendar.HOUR, 12);
+            expiry = assignedCal.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar now = Calendar.getInstance();
+        now.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date rightNow = now.getTime();
+        long diff = expiry.getTime() - rightNow.getTime();
+        Calendar remaining = Calendar.getInstance();
+        remaining.setTime(new Date(diff));
+        return remaining;
+    }
 }

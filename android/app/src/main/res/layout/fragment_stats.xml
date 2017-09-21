@@ -1,107 +1,141 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primary_light"
+    android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout"
+    <android.support.v7.widget.CardView
+        android:id="@+id/stats_lines_card_view"
+        style="@style/CustomCardStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primary_light"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/message_text_view"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/stats"
-            android:textColor="@android:color/black"
-            android:textSize="32sp"
-            android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/stats_lines_card_view"
-            style="@style/CustomCardStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"
-            android:layout_marginTop="8dp"
-            android:elevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/message_text_view">
-
-            <android.support.constraint.ConstraintLayout
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/stats_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:text="@string/your_stats"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textSize="32sp"
+                android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/stats_line_one"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                    android:textColor="@color/primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Line 1" />
+            <ProgressBar
+                android:id="@+id/stats_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stats_title" />
 
-                <TextView
-                    android:id="@+id/stats_line_two"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
-                    android:textColor="@color/primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/stats_line_one"
-                    tools:text="Line 2" />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/stats_line_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="@color/primary"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stats_title"
+                tools:text="Line 1" />
 
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/stats_line_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/primary"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stats_line_one"
+                tools:text="Line 2" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 
-                <TextView
-                    android:id="@+id/stats_line_three"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
-                    android:textColor="@color/primary"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/stats_line_two"
-                    tools:text="Line 3" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/assigned_card_view"
+        style="@style/CustomCardStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stats_lines_card_view">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</android.support.design.widget.CoordinatorLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/assigned_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                tools:text="ABCD" />
+
+            <ProgressBar
+                android:id="@+id/assigned_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/assigned_title" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/assigned_line_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/primary"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/assigned_title"
+                tools:text="Line 1" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/assigned_line_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/primary"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/assigned_line_one"
+                tools:text="Line 2" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

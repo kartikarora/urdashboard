@@ -1,18 +1,10 @@
 package me.kartikarora.urdashboard.fragments;
 
 
-import android.animation.Animator;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,22 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
-
 import java.util.Calendar;
 import java.util.List;
 
 import me.kartikarora.urdashboard.BuildConfig;
 import me.kartikarora.urdashboard.R;
 import me.kartikarora.urdashboard.models.Computed;
+import me.kartikarora.urdashboard.models.me.Assigned;
 import me.kartikarora.urdashboard.models.submissions.Completed;
 import me.kartikarora.urdashboard.utils.HelperUtils;
 import me.kartikarora.urdashboard.utils.UdacityReviewAPIUtils;
-import me.kartikarora.urdashboard.adapters.CompletedAdapter;
-import me.kartikarora.urdashboard.adapters.FeedbackAdapter;
-import me.kartikarora.urdashboard.models.me.AssignCount;
-import me.kartikarora.urdashboard.models.me.Feedback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,10 +33,9 @@ public class StatsFragment extends Fragment {
 
     private ArrayMap<String, String> headers;
     private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
-    private ProgressBar progressBar;
 
     private Call<List<Completed>> callCompleted;
-    private Call<AssignCount> callAssignCount;
+    private Call<List<Assigned>> callAssigned;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -76,7 +61,6 @@ public class StatsFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressBar = view.findViewById(R.id.progress_bar);
         headers = HelperUtils.getInstance().getHeaders(getContext());
         udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
         setupCalls();
@@ -90,47 +74,58 @@ public class StatsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Completed>> call, final Response<List<Completed>> completedResponse) {
 
-                TextView lineOne = view.findViewById(R.id.stats_line_one);
-                TextView lineTwo = view.findViewById(R.id.stats_line_two);
-                final TextView lineThree = view.findViewById(R.id.stats_line_three);
-                ConstraintLayout layout = view.findViewById(R.id.layout);
-                CardView statusHeadCardView = view.findViewById(R.id.stats_lines_card_view);
+                TextView statsLineOne = view.findViewById(R.id.stats_line_one);
+                TextView statsLineTwo = view.findViewById(R.id.stats_line_two);
+                final ProgressBar statsProgressBar = view.findViewById(R.id.stats_progress_bar);
 
-                List<Completed> completedList = completedResponse.body();
+                final List<Completed> completedList = completedResponse.body();
                 Computed computed = HelperUtils.getInstance().computeHeavyStuffFromCompletedList(completedList);
                 if (isAdded()) {
-                    lineOne.setText(getContext().getString(R.string.line_one, computed.getTotalCompleted(),
+                    statsLineOne.setText(getContext().getString(R.string.line_one, computed.getTotalCompleted(),
                             computed.getAverageTime().get(Calendar.HOUR_OF_DAY),
                             computed.getAverageTime().get(Calendar.MINUTE),
                             computed.getAverageTime().get(Calendar.SECOND)));
-                    lineTwo.setText(getContext().getString(R.string.line_two, computed.getTotalEarned(),
+                    statsLineTwo.setText(getContext().getString(R.string.line_two, computed.getTotalEarned(),
                             computed.getAvgEarned()));
 
-                    statusHeadCardView.setVisibility(View.VISIBLE);
-
-                    YoYo.with(Techniques.FadeOut)
-                            .duration(600)
-                            .onEnd(new YoYo.AnimatorCallback() {
-                                @Override
-                                public void call(Animator animator) {
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            })
-                            .playOn(progressBar);
-
+                    statsLineOne.setVisibility(View.VISIBLE);
+                    statsLineTwo.setVisibility(View.VISIBLE);
+                    statsProgressBar.setVisibility(View.GONE);
                 }
 
-                callAssignCount.enqueue(new Callback<AssignCount>() {
+                callAssigned.enqueue(new Callback<List<Assigned>>() {
                     @Override
-                    public void onResponse(Call<AssignCount> call, Response<AssignCount> response) {
+                    public void onResponse(Call<List<Assigned>> call, Response<List<Assigned>> response) {
                         if (isAdded()) {
-                            lineThree.setText(getContext().getResources().getQuantityString(R.plurals.assigned_review,
-                                    response.body().getAssignedCount(), response.body().getAssignedCount()));
+                            List<Assigned> assignedList = response.body();
+                            int assignedCount = assignedList.size();
+                            TextView assignedTitle = view.findViewById(R.id.assigned_title);
+                            TextView[] assignedLines = new TextView[]{view.findViewById(R.id.assigned_line_one), view.findViewById(R.id.assigned_line_two)};
+                            ProgressBar assignedProgressBar = view.findViewById(R.id.assigned_progress_bar);
+
+                            if (isAdded()) {
+                                assignedProgressBar.setVisibility(View.GONE);
+                                assignedTitle.setText(getContext().getResources().getQuantityString(R.plurals.assigned_review,
+                                        assignedCount, assignedCount));
+                                for (int i = 0; i < assignedList.size(); i++) {
+                                    Assigned assigned = assignedList.get(i);
+                                    Calendar remaining = HelperUtils.getInstance().timeRemainingCalculator(assigned.getAssignedAt());
+                                    int hr = remaining.get(Calendar.HOUR);
+                                    int min = remaining.get(Calendar.MINUTE);
+                                    String hours = getResources().getQuantityString(R.plurals.hours, hr, hr);
+                                    String minutes = getResources().getQuantityString(R.plurals.minutes, min, min);
+                                    assignedLines[i].setVisibility(View.VISIBLE);
+                                    assignedLines[i].setText(getString(R.string.assigned_line,
+                                            assigned.getProject().getName(),
+                                            Double.valueOf(assigned.getPrice()), hours, minutes));
+
+                                }
+                            }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<AssignCount> call, Throwable t) {
+                    public void onFailure(Call<List<Assigned>> call, Throwable t) {
                         t.printStackTrace();
                         if (call.isCanceled() && BuildConfig.DEBUG) {
                             Log.d(LOG_TAG, "Cancelled");
@@ -162,8 +157,8 @@ public class StatsFragment extends Fragment {
         if (callCompleted != null) {
             callCompleted.cancel();
         }
-        if (callAssignCount != null) {
-            callAssignCount.cancel();
+        if (callAssigned != null) {
+            callAssigned.cancel();
         }
     }
 
@@ -171,8 +166,8 @@ public class StatsFragment extends Fragment {
         if (callCompleted == null) {
             callCompleted = udacityReviewService.getSubmissionsCompleted(headers);
         }
-        if (callAssignCount == null) {
-            callAssignCount = udacityReviewService.getCertificationAssigned(headers);
+        if (callAssigned == null) {
+            callAssigned = udacityReviewService.getCertificationAssigned(headers);
         }
     }
 }
