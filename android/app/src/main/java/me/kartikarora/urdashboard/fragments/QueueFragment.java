@@ -42,10 +42,14 @@ public class QueueFragment extends Fragment {
     private ArrayMap<String, String> headers;
     private TextView messTextView;
     private RecyclerView queueRecyclerView;
-    private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
+    private UdacityReviewAPIUtils.UdacityReviewService mUdacityReviewService;
     private SwipeRefreshLayout refreshLayout;
+    private Call<List<SubmissionRequest>> submissionRequestCall;
+    private Call<List<Certification>> certificationCall;
+    private Call<List<Waits>> waitsCall;
 
     public QueueFragment() {
+        mUdacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
     }
 
     public static QueueFragment newInstance() {
@@ -70,19 +74,21 @@ public class QueueFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         headers = HelperUtils.getInstance().getHeaders(getContext());
-        messTextView = (TextView) view.findViewById(R.id.message_text_view);
-        udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
-        queueRecyclerView = (RecyclerView) view.findViewById(R.id.queue_recycle_view);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        messTextView = view.findViewById(R.id.message_text_view);
+        queueRecyclerView = view.findViewById(R.id.queue_recycle_view);
+        refreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         refreshLayout.setColorSchemeResources(R.color.accent);
         refreshLayout.setRefreshing(true);
-        fetchQueue();
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchQueue();
-            }
-        });
+        setupCalls();
+        if (isAdded()) {
+            fetchQueue();
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    fetchQueue();
+                }
+            });
+        }
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -90,7 +96,7 @@ public class QueueFragment extends Fragment {
     private void fetchQueue() {
         queueList.clear();
         refreshLayout.setRefreshing(true);
-        udacityReviewService.getSubmissionRequests(headers).enqueue(new Callback<List<SubmissionRequest>>() {
+        submissionRequestCall.enqueue(new Callback<List<SubmissionRequest>>() {
             @Override
             public void onResponse(Call<List<SubmissionRequest>> call, final Response<List<SubmissionRequest>> submissionsResponse) {
                 if (submissionsResponse.code() == 401) {
@@ -102,14 +108,13 @@ public class QueueFragment extends Fragment {
                 } else if (submissionsResponse.code() == 200) {
                     if (isAdded()) {
                         refreshLayout.setRefreshing(false);
-                        messTextView.setVisibility(View.VISIBLE);
                     }
                     if (submissionsResponse.body().size() == 0) {
                         if (isAdded()) {
                             messTextView.setText(R.string.inactive_submission_requests);
                         }
                     } else {
-                        udacityReviewService.getCertifications(headers).enqueue(new Callback<List<Certification>>() {
+                        certificationCall.enqueue(new Callback<List<Certification>>() {
                             @Override
                             public void onResponse(Call<List<Certification>> call, Response<List<Certification>> certificationsResponse) {
                                 for (Certification certification : certificationsResponse.body()) {
@@ -121,10 +126,13 @@ public class QueueFragment extends Fragment {
                                     }
                                 }
                                 for (SubmissionRequest request : submissionsResponse.body()) {
-                                    udacityReviewService.getWaits(headers, String.valueOf(request.getId())).enqueue(new Callback<List<Waits>>() {
+                                    createWaitCall(request.getId());
+                                    waitsCall.enqueue(new Callback<List<Waits>>() {
                                         @Override
                                         public void onResponse(Call<List<Waits>> call, Response<List<Waits>> waitsResponse) {
                                             for (Waits waits : waitsResponse.body()) {
+                                                messTextView.setVisibility(View.VISIBLE);
+                                                messTextView.setText(getResources().getQuantityString(R.plurals.your_queue_position,waitsResponse.body().size()));
                                                 Queue queue = queueList.getQueueItemFromProjectId(waits.getProjectId());
                                                 queue.setPosition(waits.getPosition());
                                                 queueList.set(queueList.indexOf(queue), queue);
@@ -180,5 +188,34 @@ public class QueueFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (submissionRequestCall != null) {
+            submissionRequestCall.cancel();
+        }
+        if (certificationCall != null) {
+            certificationCall.cancel();
+        }
+        if (waitsCall != null) {
+            waitsCall.cancel();
+        }
+
+    }
+
+    private void setupCalls() {
+        if (submissionRequestCall == null) {
+            submissionRequestCall = mUdacityReviewService.getSubmissionRequests(headers);
+        }
+        if (certificationCall == null) {
+            certificationCall = mUdacityReviewService.getCertifications(headers);
+        }
+
+    }
+
+    private void createWaitCall(long id) {
+        waitsCall = mUdacityReviewService.getWaits(headers, String.valueOf(id));
     }
 }

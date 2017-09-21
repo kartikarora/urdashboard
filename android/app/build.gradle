@@ -20,13 +20,14 @@ android {
 }
 
 dependencies {
-    def supportLibVer = "26.0.2", playServicesVer = "11.2.0"
+    def supportLibVer = "26.1.0", playServicesVer = "11.2.0"
     implementation "com.android.support:appcompat-v7:${supportLibVer}"
     implementation "com.android.support:recyclerview-v7:${supportLibVer}"
     implementation "com.android.support:cardview-v7:${supportLibVer}"
     implementation "com.android.support:design:${supportLibVer}"
     implementation "com.android.support:preference-v7:${supportLibVer}"
     implementation "com.android.support:support-vector-drawable:${supportLibVer}"
+    implementation "com.android.support:customtabs:${supportLibVer}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "com.google.firebase:firebase-auth:${playServicesVer}"
     implementation "com.google.firebase:firebase-messaging:${playServicesVer}"

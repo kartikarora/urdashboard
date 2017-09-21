@@ -1,6 +1,8 @@
 package me.kartikarora.urdashboard.adapters;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,7 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Completed completed = getItem(position);
         holder.name.setText(completed.getProject().getName());
+        holder.setProjectId(completed.getId());
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
         try {
@@ -74,11 +77,30 @@ public class CompletedAdapter extends RecyclerView.Adapter<CompletedAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, detail;
+        long projectId;
 
-        ViewHolder(View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.completed_name);
             detail = itemView.findViewById(R.id.completed_detail);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String url = "https://review.udacity.com/#!/reviews/";
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(context, Uri.parse(url + getProjectId()));
+                }
+            });
+        }
+
+        public long getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(long projectId) {
+            this.projectId = projectId;
         }
     }
 

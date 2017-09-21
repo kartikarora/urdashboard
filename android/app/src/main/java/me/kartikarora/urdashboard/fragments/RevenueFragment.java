@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class RevenueFragment extends Fragment {
     private ArrayMap<String, String> headers;
     private Calendar calendarToday;
-    private UdacityReviewAPIUtils.UdacityReviewService udacityReviewService;
+    private UdacityReviewAPIUtils.UdacityReviewService mUdacityReviewService;
     private Call<List<Completed>> callRevenueToday, callRevenueThisMonth, callRevenueCustom;
     private static final SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
@@ -42,7 +42,7 @@ public class RevenueFragment extends Fragment {
     public RevenueFragment() {
         sd.setTimeZone(TimeZone.getTimeZone("UTC"));
         calendarToday = Calendar.getInstance();
-        udacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
+        mUdacityReviewService = UdacityReviewAPIUtils.getInstance().getUdacityReviewService();
     }
 
     public static RevenueFragment newInstance() {
@@ -220,7 +220,7 @@ public class RevenueFragment extends Fragment {
                 customProgressBar.setVisibility(View.VISIBLE);
                 customLineOneTextView.setVisibility(View.GONE);
                 customLineTwoTextView.setVisibility(View.GONE);
-                callRevenueCustom = udacityReviewService.getSubmissionsCompletedWithDateRange(headers,
+                callRevenueCustom = mUdacityReviewService.getSubmissionsCompletedWithDateRange(headers,
                         dates[0], dates[1]);
                 callRevenueCustom.enqueue(new Callback<List<Completed>>() {
                     @Override
@@ -268,11 +268,11 @@ public class RevenueFragment extends Fragment {
             endToday.set(Calendar.MINUTE, 59);
             endToday.set(Calendar.SECOND, 59);
             endToday.set(Calendar.MILLISECOND, 999);
-            callRevenueToday = udacityReviewService.getSubmissionsCompletedWithDateRange(headers,
+            callRevenueToday = mUdacityReviewService.getSubmissionsCompletedWithDateRange(headers,
                     sd.format(startToday.getTime()), sd.format(endToday.getTime()));
         }
         if (callRevenueThisMonth == null) {
-            callRevenueThisMonth = udacityReviewService.getSubmissionsCompletedWithDateRange(headers,
+            callRevenueThisMonth = mUdacityReviewService.getSubmissionsCompletedWithDateRange(headers,
                     sd.format(getFirstDateOfCurrentMonth().getTime()), sd.format(getLastDayOfCurrentMonth().getTime()));
         }
     }
