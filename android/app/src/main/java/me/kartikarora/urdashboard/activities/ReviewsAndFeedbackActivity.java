@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class ReviewsAndFeedbackActivity extends AppCompatActivity {
 
         final RecyclerView reviewsRecyclerView = findViewById(R.id.reviews_recycle_view);
         final RecyclerView feedbackRecyclerView = findViewById(R.id.feedback_recycler_view);
+        final ProgressBar progressBar = findViewById(R.id.progress_bar);
+        final ProgressBar feedbackProgressBar = findViewById(R.id.feedback_progress_bar);
 
         setupCalls();
 
@@ -55,6 +58,7 @@ public class ReviewsAndFeedbackActivity extends AppCompatActivity {
                 reviewsRecyclerView.setAdapter(new ReviewsAdapter(response.body()));
                 reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 reviewsRecyclerView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -72,6 +76,7 @@ public class ReviewsAndFeedbackActivity extends AppCompatActivity {
                 feedbackRecyclerView.setAdapter(new FeedbackAdapter(response.body()));
                 feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 feedbackRecyclerView.setVisibility(View.VISIBLE);
+                feedbackProgressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -82,7 +87,6 @@ public class ReviewsAndFeedbackActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         ConstraintLayout bottomSheetLayout = findViewById(R.id.feedback_bottom_sheet);
         final AppCompatTextView feedbacksTextView = findViewById(R.id.feedback_text_view);
