@@ -79,6 +79,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
         android:textColor="@color/primary_light"
         android:textSize="24sp"
+        android:visibility="gone"
         android:theme="@style/ButtonDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
