@@ -96,7 +96,7 @@ public class QueueFragment extends Fragment {
     private void fetchQueue() {
         queueList.clear();
         refreshLayout.setRefreshing(true);
-        submissionRequestCall.enqueue(new Callback<List<SubmissionRequest>>() {
+        submissionRequestCall.clone().enqueue(new Callback<List<SubmissionRequest>>() {
             @Override
             public void onResponse(Call<List<SubmissionRequest>> call, final Response<List<SubmissionRequest>> submissionsResponse) {
                 if (submissionsResponse.code() == 401) {
@@ -114,7 +114,7 @@ public class QueueFragment extends Fragment {
                             messTextView.setText(R.string.inactive_submission_requests);
                         }
                     } else {
-                        certificationCall.enqueue(new Callback<List<Certification>>() {
+                        certificationCall.clone().enqueue(new Callback<List<Certification>>() {
                             @Override
                             public void onResponse(Call<List<Certification>> call, Response<List<Certification>> certificationsResponse) {
                                 for (Certification certification : certificationsResponse.body()) {
@@ -127,7 +127,7 @@ public class QueueFragment extends Fragment {
                                 }
                                 for (SubmissionRequest request : submissionsResponse.body()) {
                                     createWaitCall(request.getId());
-                                    waitsCall.enqueue(new Callback<List<Waits>>() {
+                                    waitsCall.clone().enqueue(new Callback<List<Waits>>() {
                                         @Override
                                         public void onResponse(Call<List<Waits>> call, Response<List<Waits>> waitsResponse) {
                                             for (Waits waits : waitsResponse.body()) {
