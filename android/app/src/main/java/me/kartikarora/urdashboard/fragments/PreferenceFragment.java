@@ -81,7 +81,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
                 .setPositiveButton("Copy to clipboard", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        HelperUtils.getInstance().copyToClipboard(getContext(), message, what);
+                        HelperUtils.getInstance().copyToClipboard(PreferenceFragment.this.getActivity().getApplicationContext(), message, what);
                     }
                 }).create().show();
     }
