@@ -123,6 +123,25 @@
                 app:layout_constraintTop_toBottomOf="@id/assigned_title"
                 tools:text="Line 1" />
 
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/unassign_button_one"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unassign_submission"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/assigned_line_one"
+                app:layout_constraintTop_toBottomOf="@id/assigned_line_one" />
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/division_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/unassign_button_one"
+                android:background="@android:color/darker_gray"/>
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/assigned_line_two"
                 android:layout_width="match_parent"
@@ -134,8 +153,19 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/assigned_line_one"
+                app:layout_constraintTop_toBottomOf="@id/division_view"
                 tools:text="Line 2" />
+
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/unassign_button_two"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unassign_submission"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/assigned_line_two"
+                app:layout_constraintTop_toBottomOf="@id/assigned_line_two" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

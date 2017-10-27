@@ -12,6 +12,7 @@ import me.kartikarora.urdashboard.models.me.Feedback;
 import me.kartikarora.urdashboard.models.me.Me;
 import me.kartikarora.urdashboard.models.submissions.Completed;
 import me.kartikarora.urdashboard.models.submissions.SubmissionRequest;
+import me.kartikarora.urdashboard.models.submissions.Unassign;
 import me.kartikarora.urdashboard.models.waits.Waits;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -19,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -87,6 +89,9 @@ public class UdacityReviewAPIUtils {
         @GET("me/submissions/completed")
         Call<List<Completed>> getSubmissionsCompletedWithDateRange(@HeaderMap ArrayMap<String, String> headers,
                                                                    @Query("start_date") String startDate, @Query("end_date") String endDate);
+        
+        @PUT("/submissions/{id}/unassign")
+        Call<Unassign> unassignSubmission(@HeaderMap ArrayMap<String, String> headers, @Path("id") String id);
 
     }
 }

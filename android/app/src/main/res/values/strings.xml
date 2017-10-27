@@ -69,6 +69,8 @@
     <string name="pref_type">type</string>
     <string name="your_stats">Your Stats</string>
     <string name="assigned_line">%1$s submission assigned which pays $%2$.2f. You have %3$s and %4$s remaining to complete the review.</string>
+    <string name="unassign_submission">Unassign Submission</string>
+    <string name="unassgined_success">%1$s unassigned</string>
 
 
 </resources>
