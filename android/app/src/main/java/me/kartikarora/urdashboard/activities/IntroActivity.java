@@ -14,9 +14,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.FirebaseAuth;
-
 import me.kartikarora.urdashboard.R;
 import me.kartikarora.urdashboard.utils.HelperUtils;
 
@@ -33,8 +30,6 @@ public class IntroActivity extends AppCompatActivity {
     private static final int RC_QR_SCAN = 1002;
     private static final int RC_CAMERA = 1003;
     private static final String TAG = IntroActivity.class.getName();
-    private GoogleApiClient mGoogleApiClient;
-    private FirebaseAuth mAuth;
     private View rootView;
 
     @Override

@@ -8,8 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import me.kartikarora.potato.Potato;
 import me.kartikarora.urdashboard.R;
 import me.kartikarora.urdashboard.utils.HelperUtils;
@@ -28,15 +26,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
-
-        Preference fcmPreference = findPreference(getString(R.string.pref_fcm_token));
-        fcmPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                showDialog(FirebaseInstanceId.getInstance().getToken(), "FCM Token");
-                return true;
-            }
-        });
         Preference udacityPreference = findPreference(getString(R.string.pref_udacity_token));
         udacityPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
